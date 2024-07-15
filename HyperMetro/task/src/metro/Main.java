@@ -4,8 +4,6 @@ import metro.controller.CommandExecutor;
 import metro.file.InputReader;
 import metro.file.Station;
 import metro.mapper.MetroNetworkMapper;
-import metro.mapper.SubwayNetworkMapper;
-import metro.controller.SubwayLineController;
 import metro.controller.MetroNetworkController;
 
 import java.io.*;
