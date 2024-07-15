@@ -1,0 +1,17 @@
+type: choice
+is_multiple_choice: true
+options:
+  - text: Invoking  <b>matcher.start()</b> before <b>matcher.group()</b>
+  - text: Invoking  <b>matcher.end()</b> after <b>matcher.find()</b> method returned
+      <b>false</b>
+  - text: Invoking <b>matcher.find()</b> for the second time
+  - text: Invoking <b>matcher.start()</b> before <b>matcher.find()</b>
+files:
+  - name: src/Task.java
+    visible: true
+    learner_created: false
+feedback_link: https://hyperskill.org/learn/step/3718#comment
+status: Solved
+record: -1
+custom_name: Wrong move!
+local_check: false

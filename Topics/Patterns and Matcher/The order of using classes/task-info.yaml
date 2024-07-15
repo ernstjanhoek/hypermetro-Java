@@ -1,0 +1,16 @@
+type: sorting
+options:
+  - Create an object of Pattern
+  - ' Create an object of Matcher'
+  - Invoke matching methods
+files:
+  - name: src/Task.java
+    visible: true
+    learner_created: false
+feedback_link: https://hyperskill.org/learn/step/3714#comment
+status: Solved
+record: -1
+ordering:
+  - 0
+  - 1
+  - 2

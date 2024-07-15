@@ -1,0 +1,20 @@
+type: choice
+is_multiple_choice: false
+options:
+  - text: "The pattern matches a string starts with one or more whitespace characters\
+    \ followed by 2 or 3 digits that may optionally be followed by a dash, this group\
+    \ repeats three times at the end of the word."
+  - text: The pattern matches any string that doesn&#x27;t contain any white space.
+  - text: "The pattern matches a string starts with one or more whitespace characters\
+    \ followed by any characters that optionally be followed by a dash, this group\
+    \ repeats three times."
+  - text: "The pattern matches a string starts with 2 or 3 digits followed by a dash,\
+    \ this group repeats three times at the end of the word."
+files:
+  - name: src/Task.java
+    visible: true
+    learner_created: false
+feedback_link: https://hyperskill.org/learn/step/43287#comment
+status: Solved
+record: -1
+local_check: false

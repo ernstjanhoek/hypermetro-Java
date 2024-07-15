@@ -1,0 +1,71 @@
+type: edu
+files:
+  - name: src/metro/Main.java
+    visible: true
+    learner_created: false
+  - name: test/baltimore.json
+    visible: false
+    learner_created: false
+  - name: test/lausanne.json
+    visible: false
+    learner_created: false
+  - name: test/prague.json
+    visible: false
+    learner_created: false
+  - name: test/Tests.java
+    visible: false
+    learner_created: false
+  - name: src/metro/model/SubwayLine.java
+    visible: true
+    learner_created: true
+  - name: src/metro/file/InputReader.java
+    visible: true
+    learner_created: true
+  - name: src/test_file.txt
+    visible: true
+    learner_created: true
+  - name: src/metro/file/Station.java
+    visible: true
+    learner_created: true
+  - name: src/metro/model/SubwayNode.java
+    visible: true
+    learner_created: true
+  - name: src/metro/model/Edge.java
+    visible: true
+    learner_created: true
+  - name: src/metro/file/Transfer.java
+    visible: true
+    learner_created: true
+  - name: src/metro/mapper/SubwayNetworkMapper.java
+    visible: true
+    learner_created: true
+  - name: src/metro/controller/MetroNetworkController.java
+    visible: true
+    learner_created: true
+  - name: src/metro/modelv2/MetroNode.java
+    visible: true
+    learner_created: true
+  - name: src/metro/mapper/Mapper.java
+    visible: true
+    learner_created: true
+  - name: src/metro/mapper/MetroNetworkMapper.java
+    visible: true
+    learner_created: true
+  - name: src/metro/controller/SubwayLineController.java
+    visible: true
+    learner_created: true
+  - name: src/metro/modelv2/MetroLine.java
+    visible: true
+    learner_created: true
+  - name: src/metro/modelv2/MetroEdge.java
+    visible: true
+    learner_created: true
+  - name: src/metro/controller/CommandExecutor.java
+    visible: true
+    learner_created: true
+  - name: src/metro/controller/BaseController.java
+    visible: true
+    learner_created: true
+feedback_link: https://hyperskill.org/learn/step/10344#comment
+status: Unchecked
+record: 4

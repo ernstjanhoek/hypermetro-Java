@@ -1,0 +1,29 @@
+type: edu
+files:
+  - name: test/baltimore.json
+    visible: false
+    learner_created: false
+  - name: test/lausanne.json
+    visible: false
+    learner_created: false
+  - name: test/prague.json
+    visible: false
+    learner_created: false
+  - name: test/Tests.java
+    visible: false
+    learner_created: false
+  - name: src/test_file.txt
+    visible: true
+    learner_created: true
+  - name: src/metro/subway/Station.java
+    visible: true
+    learner_created: true
+  - name: src/metro/subway/Transfer.java
+    visible: true
+    learner_created: true
+  - name: src/metro/file/SubwayLineMapper.java
+    visible: true
+    learner_created: true
+feedback_link: https://hyperskill.org/learn/step/10343#comment
+status: Solved
+record: 3

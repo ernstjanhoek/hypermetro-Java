@@ -1,0 +1,15 @@
+type: choice
+is_multiple_choice: true
+options:
+  - text: These classes provide rich API.
+  - text: Strings don't support some metacharacters in regexes.
+  - text: Pattern and Matcher improve the performance of regex processing.
+  - text: These classes are newer and easier to use.
+files:
+  - name: src/Task.java
+    visible: true
+    learner_created: false
+feedback_link: https://hyperskill.org/learn/step/3713#comment
+status: Solved
+record: -1
+local_check: false

@@ -1,0 +1,38 @@
+type: edu
+files:
+  - name: src/metro/Main.java
+    visible: true
+    learner_created: false
+  - name: test/baltimore.json
+    visible: false
+    learner_created: false
+  - name: test/lausanne.json
+    visible: false
+    learner_created: false
+  - name: test/samara.json
+    visible: false
+    learner_created: false
+  - name: test/Tests.java
+    visible: false
+    learner_created: false
+  - name: src/metro/InputReader.java
+    visible: true
+    learner_created: true
+  - name: src/metro/subway/SubwayNode.java
+    visible: true
+    learner_created: true
+  - name: src/metro/subway/SubwayStation.java
+    visible: true
+    learner_created: true
+  - name: src/metro/subway/SubwayLine.java
+    visible: true
+    learner_created: true
+  - name: src/test_file.txt
+    visible: true
+    learner_created: true
+feedback_link: https://hyperskill.org/learn/step/10342#comment
+status: Solved
+feedback:
+  message: Congratulations!
+  time: "Thu, 11 Jul 2024 11:43:39 UTC"
+record: 2

@@ -1,0 +1,14 @@
+<div class="step-text">
+<p>Consider the following Java code snippet:
+</p><pre><code class="java">
+String str = "123A345B6789";
+Pattern pattern = Pattern.compile(REGEX);
+Matcher matcher = pattern.matcher(str);
+while(matcher.find()) {
+   System.out.print("Start index: " + matcher.start());
+   System.out.print(" End index: " + matcher.end() + " ");
+   System.out.println(matcher.group());
+}
+</code></pre>
+What should the REGEX string be, in order to find separate sequences of 3 digits followed by any uppercase letter?
+</div>

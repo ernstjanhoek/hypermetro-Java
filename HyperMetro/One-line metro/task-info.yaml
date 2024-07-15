@@ -1,0 +1,26 @@
+type: edu
+files:
+  - name: src/metro/Main.java
+    visible: true
+    learner_created: false
+  - name: test/baltimore.txt
+    visible: false
+    learner_created: false
+  - name: test/empty.txt
+    visible: false
+    learner_created: false
+  - name: test/samara.txt
+    visible: false
+    learner_created: false
+  - name: test/Tests.java
+    visible: false
+    learner_created: false
+  - name: src/metro/InputReader.java
+    visible: true
+    learner_created: true
+feedback_link: https://hyperskill.org/learn/step/10341#comment
+status: Solved
+feedback:
+  message: Congratulations!
+  time: "Mon, 08 Jul 2024 07:34:53 UTC"
+record: 1

@@ -1,0 +1,18 @@
+type: choice
+is_multiple_choice: false
+options:
+  - text: returns 3
+  - text: returns 10
+  - text: returns 30
+  - text: throws IllegalStateException
+  - text: returns false
+  - text: returns 0
+files:
+  - name: src/Task.java
+    visible: true
+    learner_created: false
+feedback_link: https://hyperskill.org/learn/step/3720#comment
+status: Solved
+record: -1
+custom_name: What do we get?
+local_check: false

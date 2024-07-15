@@ -1,0 +1,14 @@
+type: code
+files:
+  - name: src/Main.java
+    visible: true
+    learner_created: false
+feedback_link: https://hyperskill.org/learn/step/12800#comment
+status: Failed
+feedback:
+  message: "Failed test #1 of 8. Wrong answer\n\nThis is a sample test from the problem\
+    \ statement!\n\nTest input:\nThe    keY    is     ggYYY3564   THE    key IS ffFF23c!\
+    \ \nCorrect output:\nggYYY3564\n\nYour code output:\n\n"
+  time: "Sun, 07 Jul 2024 19:27:58 UTC"
+record: -1
+submission_language: java17

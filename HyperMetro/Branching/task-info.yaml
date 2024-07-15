@@ -1,0 +1,14 @@
+type: edu
+files:
+  - name: src/metro/Main.java
+    visible: true
+    learner_created: false
+  - name: test/london.json
+    visible: false
+    learner_created: false
+  - name: test/Tests.java
+    visible: false
+    learner_created: false
+feedback_link: https://hyperskill.org/learn/step/10346#comment
+status: Unchecked
+record: -1

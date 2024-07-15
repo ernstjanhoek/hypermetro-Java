@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="GradleMigrationSettings" migrationVersion="1" />
+  <component name="GradleSettings">
+    <option name="linkedExternalProjectsSettings">
+      <GradleProjectSettings>
+        <option name="delegatedBuild" value="false" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="gradleJvm" value="#JAVA_INTERNAL" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/HyperMetro/task" />
+            <option value="$PROJECT_DIR$/Topics/Match results/Check the essay" />
+            <option value="$PROJECT_DIR$/Topics/Match results/Extracting big numbers from a text" />
+            <option value="$PROJECT_DIR$/Topics/Match results/Extracting words from a text" />
+            <option value="$PROJECT_DIR$/Topics/Match results/Find all passwords" />
+            <option value="$PROJECT_DIR$/Topics/Match results/How many times it returns true" />
+            <option value="$PROJECT_DIR$/Topics/Match results/Theory" />
+            <option value="$PROJECT_DIR$/Topics/Match results/What do we get" />
+            <option value="$PROJECT_DIR$/Topics/Match results/Wrong move" />
+            <option value="$PROJECT_DIR$/Topics/Patterns and Matcher/E-mail address" />
+            <option value="$PROJECT_DIR$/Topics/Patterns and Matcher/Find a word with a given length" />
+            <option value="$PROJECT_DIR$/Topics/Patterns and Matcher/In the middle of a word" />
+            <option value="$PROJECT_DIR$/Topics/Patterns and Matcher/Invoking matches and find" />
+            <option value="$PROJECT_DIR$/Topics/Patterns and Matcher/Number parsing" />
+            <option value="$PROJECT_DIR$/Topics/Patterns and Matcher/Start or end of a word" />
+            <option value="$PROJECT_DIR$/Topics/Patterns and Matcher/The order of using classes" />
+            <option value="$PROJECT_DIR$/Topics/Patterns and Matcher/Theory" />
+            <option value="$PROJECT_DIR$/Topics/Patterns and Matcher/Why use Pattern and Matcher" />
+            <option value="$PROJECT_DIR$/Topics/Recursion/Find a substring" />
+            <option value="$PROJECT_DIR$/Topics/Recursion/Fix the method to print strings in the reverse order" />
+            <option value="$PROJECT_DIR$/Topics/Recursion/K-combination" />
+            <option value="$PROJECT_DIR$/Topics/Recursion/Select statement" />
+            <option value="$PROJECT_DIR$/Topics/Recursion/Theory" />
+            <option value="$PROJECT_DIR$/Topics/Recursion/What does the method do" />
+            <option value="$PROJECT_DIR$/Topics/Regexes in programs/Card name validation and identification" />
+            <option value="$PROJECT_DIR$/Topics/Regexes in programs/Check IP address" />
+            <option value="$PROJECT_DIR$/Topics/Regexes in programs/Check the clock time" />
+            <option value="$PROJECT_DIR$/Topics/Regexes in programs/Check the date" />
+            <option value="$PROJECT_DIR$/Topics/Regexes in programs/Finding digit-letter sequences with regex" />
+            <option value="$PROJECT_DIR$/Topics/Regexes in programs/Ignoring spaces" />
+            <option value="$PROJECT_DIR$/Topics/Regexes in programs/Illegal identifiers" />
+            <option value="$PROJECT_DIR$/Topics/Regexes in programs/Safe password" />
+            <option value="$PROJECT_DIR$/Topics/Regexes in programs/Theory" />
+            <option value="$PROJECT_DIR$/Topics/Regexes in programs/Understanding a Regular Expression Pattern" />
+            <option value="$PROJECT_DIR$/Topics/Regexes in programs/Vehicle registration number" />
+            <option value="$PROJECT_DIR$/util" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+    </option>
+  </component>
+</project>

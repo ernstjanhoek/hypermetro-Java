@@ -1,0 +1,16 @@
+type: choice
+is_multiple_choice: false
+options:
+  - text: "&quot;\\\\d{3}\\\\S&quot;"
+  - text: "&quot;\\\\d{3}\\\\D&quot;"
+  - text: "&quot;\\\\d{3}\\\\W&quot;"
+  - text: "&quot;\\\\d{3}\\\\w&quot;"
+  - text: "&quot;\\\\d{3}[A-Z]&quot;"
+files:
+  - name: src/Task.java
+    visible: true
+    learner_created: false
+feedback_link: https://hyperskill.org/learn/step/33673#comment
+status: Solved
+record: -1
+local_check: false
