@@ -33,90 +33,108 @@ public class MetroNetworkController implements CommandExecutor {
 
     @Override
     public void output(String lineName) {
-        try {
-            // this deque holds edges that meet criteria (MetroLine.name == lineName)
-            Deque<MetroEdge> edgeDeque = new ArrayDeque<>();
-            MetroLine line = new MetroLine(lineName);
+        // this deque holds edges that meet criteria (MetroLine.name == lineName)
+        Deque<MetroEdge> edgeDeque = new ArrayDeque<>();
+        MetroLine line = new MetroLine(lineName);
 
-            // (some) starting edge
-            Optional<MetroEdge> startingEdge = metroNodeMap.values().stream()
-                    .flatMap(Set::stream)
-                    .filter(edge -> edge.getDestination().getName().equals("Edgver road")) // .getLine().getName().equals(lineName))
-                    .findFirst();
-            // find previous by finding all edges for origin node and filtering where 'origin node' as value == 'destination'
-            metroNodeMap.get(startingEdge.get().getOrigin());
+        // (some) starting edge
+        Optional<MetroEdge> startingEdge = metroNodeMap.values().stream()
+                .flatMap(Set::stream)
+                .filter(edge -> edge.getLine().getName().equals(lineName))
+                .findFirst();
+        // find previous by finding all edges for origin node and filtering where 'origin node' as value == 'destination'
+        startingEdge.ifPresent(edgeDeque::add);
 
-            startingEdge.get().getOrigin();
-
-            //edge destination
-            startingEdge.get().getDestination();
-
-            while (startingEdge.isPresent()) {
-                edgeDeque.add(startingEdge.get());
-                Optional<Set<MetroEdge>> previousEdges = findPreviousEdges(startingEdge.get());
+        // previous Edges
+        Optional<MetroEdge> edgePrev = startingEdge;
+        while (edgePrev.isPresent()) {
+            try {
+                Optional<Set<MetroEdge>> previousEdges = findPreviousEdges(edgePrev.get());
                 if (previousEdges.isPresent()) {
-                    startingEdge = filterByLine(previousEdges.get(), line);
+                    edgePrev = filterByLine(previousEdges.get(), line);
+                    edgePrev.ifPresent(edgeDeque::push);
                 } else {
-                    startingEdge = Optional.empty();
+                    edgePrev = Optional.empty();
                 }
+            } catch (Exception e) {
+                System.out.println(Arrays.toString(e.getStackTrace()));
             }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+
         }
+
+        // next Edges
+        Optional<MetroEdge> edgeNext = startingEdge;
+        while (edgeNext.isPresent()) {
+            try {
+                Optional<Set<MetroEdge>> nextEdges = findNextEdges(edgeNext.get());
+                if (nextEdges.isPresent()) {
+                    edgeNext = filterByLine(nextEdges.get(), line);
+                    edgeNext.ifPresent(edgeDeque::add);
+                } else {
+                    edgeNext = Optional.empty();
+                }
+            } catch (Exception e) {
+                System.out.println(Arrays.toString(e.getStackTrace()));
+            }
+        }
+
+        System.out.println("depot");
+        System.out.println(edgeDeque.getFirst().getOrigin().getName());
+        edgeDeque.forEach(e -> System.out.println(e.getDestination().getName()));
+        System.out.println("depot");
+    }
+    /*
+    if (startingEdge.isPresent()) {
+        MetroEdge edge = startingEdge.get();
+        MetroNode startNode = new MetroNode(edge.getOrigin().getName());
+        Set<MetroEdge> edges = metroNodeMap.get(startNode);
+        List<Transfer> transfers = edges.stream()
+                .filter(e -> e.getOrigin().equals(startNode))
+                .map(MetroEdge::getLine)
+                .map(e -> new Transfer(e.getName(), startNode.getName()))
+                .toList();
+
+        lineDeque.add(new Station(edge.getOrigin().getName(), transfers.toArray(new Transfer[0])));
+
+        // find previous node?
+        MetroNode newNode = startNode;
+        Optional<Set<MetroEdge>> newEdges = findPreviousEdgesByLine(edge);
+        while (newEdges.isPresent() && !newEdges.get().isEmpty()) {
+
+            Set<MetroEdge> locEdges = newEdges.get();
+            newNode = new MetroNode(edge.getOrigin().getName());
+            MetroNode finalNewNode = newNode;
+            MetroNode finalNewNode1 = newNode;
+
+            List<Transfer> newTransfers = locEdges.stream()
+                    .filter(e -> e.getOrigin().equals(newNode))
+                    .map(MetroEdge::getLine)
+                    .map(e -> new Transfer(e.getName(), newNode.getName()))
+                    .toList();
+            lineDeque.add(new Station(newNode.getName(), newTransfers.toArray(new Transfer[0])));
+
+            Optional<MetroEdge> newEdge = filterOriginByLine(locEdges, new MetroLine(lineName));
+
+            newEdges = newEdge.flatMap(this::findPreviousEdgesByLine);
+        }
+
+        // find next node?
+
 
     }
-        /*
-        if (startingEdge.isPresent()) {
-            MetroEdge edge = startingEdge.get();
-            MetroNode startNode = new MetroNode(edge.getOrigin().getName());
-            Set<MetroEdge> edges = metroNodeMap.get(startNode);
-            List<Transfer> transfers = edges.stream()
-                    .filter(e -> e.getOrigin().equals(startNode))
-                    .map(MetroEdge::getLine)
-                    .map(e -> new Transfer(e.getName(), startNode.getName()))
-                    .toList();
 
-            lineDeque.add(new Station(edge.getOrigin().getName(), transfers.toArray(new Transfer[0])));
-
-            // find previous node?
-            MetroNode newNode = startNode;
-            Optional<Set<MetroEdge>> newEdges = findPreviousEdgesByLine(edge);
-            while (newEdges.isPresent() && !newEdges.get().isEmpty()) {
-
-                Set<MetroEdge> locEdges = newEdges.get();
-                newNode = new MetroNode(edge.getOrigin().getName());
-                MetroNode finalNewNode = newNode;
-                MetroNode finalNewNode1 = newNode;
-
-                List<Transfer> newTransfers = locEdges.stream()
-                        .filter(e -> e.getOrigin().equals(newNode))
-                        .map(MetroEdge::getLine)
-                        .map(e -> new Transfer(e.getName(), newNode.getName()))
-                        .toList();
-                lineDeque.add(new Station(newNode.getName(), newTransfers.toArray(new Transfer[0])));
-
-                Optional<MetroEdge> newEdge = filterOriginByLine(locEdges, new MetroLine(lineName));
-
-                newEdges = newEdge.flatMap(this::findPreviousEdgesByLine);
-            }
-
-            // find next node?
-
-
-        }
-
-        System.out.println("depot");
-        lineDeque.forEach(System.out::println);
-        System.out.println("depot");
-        */
+    */
     private Optional<MetroEdge> filterByLine(Set<MetroEdge> edges, MetroLine line) throws Exception {
         List<MetroEdge> edgeList = edges.stream().filter(e -> e.getLine().equals(line)).toList();
 
-        if (edgeList.size() != 1) {
-            throw new Exception("Invalid size for line filter list: each station can only have one origin.");
+        if (edgeList.size() > 1) {
+            throw new Exception(String.format("Invalid size for line filter list (%d): each station can only have one origin.",
+                    edgeList.size()));
+        } else if (edgeList.isEmpty()) {
+            return Optional.empty();
+        } else {
+            return Optional.of(edgeList.get(0));
         }
-
-        return Optional.of(edgeList.get(0));
     }
 
     // find previous by finding all edges for origin node and filtering where 'origin node' as value == 'destination'
