@@ -2,14 +2,13 @@ package metro.mapper;
 
 import metro.file.Station;
 import metro.modelv2.MetroLine;
-import metro.controller.MetroNetworkController;
+import metro.modelv2.MetroMap;
 import metro.modelv2.MetroNode;
 import metro.modelv2.MetroEdge;
-
 import java.util.*;
 
-public class MetroNetworkMapper implements Mapper<MetroNetworkController> {
-    public MetroNetworkController buildAndConnect(Map<String, Map<String, Station>> inputMap) {
+public class MetroNetworkMapper implements Mapper<MetroMap> {
+    public MetroMap buildAndConnect(Map<String, Map<String, Station>> inputMap) {
         Map<MetroLine, List<Station>> lineStations = getMetroLineListMap(inputMap);
 
         Map<MetroNode, Set<MetroEdge>> metroMap = new HashMap<>();
@@ -22,6 +21,8 @@ public class MetroNetworkMapper implements Mapper<MetroNetworkController> {
                 MetroNode origin = new MetroNode(stationArray[i].getName());
                 MetroNode destination = new MetroNode(stationArray[i + 1].getName());
                 MetroEdge metroEdge = new MetroEdge(origin, destination, line);
+
+                // add entry for origin
                 if (!metroMap.containsKey(origin)) {
                     HashSet<MetroEdge> metroEdges = new HashSet<>();
                     metroEdges.add(metroEdge);
@@ -29,6 +30,7 @@ public class MetroNetworkMapper implements Mapper<MetroNetworkController> {
                 } else {
                     metroMap.get(origin).add(metroEdge);
                 }
+                // add entry for destination
                 if (!metroMap.containsKey(destination)) {
                     HashSet<MetroEdge> metroEdges = new HashSet<>();
                     metroEdges.add(metroEdge);
@@ -38,8 +40,7 @@ public class MetroNetworkMapper implements Mapper<MetroNetworkController> {
                 }
             }
         });
-
-        return new MetroNetworkController(metroMap);
+        return new MetroMap(metroMap);
     }
 
     private static Map<MetroLine, List<Station>> getMetroLineListMap(Map<String, Map<String, Station>> inputMap) {

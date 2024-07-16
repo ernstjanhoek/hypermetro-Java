@@ -1,10 +1,13 @@
 package metro;
 
 import metro.controller.CommandExecutor;
+import metro.controller.SubwayLineController;
 import metro.file.InputReader;
 import metro.file.Station;
 import metro.mapper.MetroNetworkMapper;
 import metro.controller.MetroNetworkController;
+import metro.mapper.SubwayNetworkMapper;
+import metro.modelv2.MetroMap;
 
 import java.io.*;
 import java.util.List;
@@ -12,15 +15,15 @@ import java.util.Map;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        Map<String, Map<String, Station>> metroMap = InputReader.readFromFile(args[0]);
+        Map<String, Map<String, Station>> inputMap = InputReader.readFromFile(args[0]);
 
-        // SubwayNetworkMapper mapper = new SubwayNetworkMapper();
-        // SubwayLineController subwayLineController = mapper.buildAndConnect(metroMap);
+        SubwayNetworkMapper mapper = new SubwayNetworkMapper();
+        SubwayLineController subwayLineController = mapper.buildAndConnect(inputMap);
 
         MetroNetworkMapper metroNetworkMapper = new MetroNetworkMapper();
-        MetroNetworkController metroNetworkController = metroNetworkMapper.buildAndConnect(metroMap);
+        MetroMap metroMap = metroNetworkMapper.buildAndConnect(inputMap);
 
-        CommandExecutor executor = metroNetworkController;
+        CommandExecutor executor =  new MetroNetworkController(metroMap);
 
         while (executor.isRunning()) {
             List<String> commandArgs = InputReader.readCommand();
