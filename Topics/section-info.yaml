@@ -3,3 +3,5 @@ content:
   - Patterns and Matcher
   - Regexes in programs
   - Recursion
+  - PriorityQueue
+  - The utility class Collections

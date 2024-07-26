@@ -34,6 +34,12 @@
             <option value="$PROJECT_DIR$/Topics/Patterns and Matcher/The order of using classes" />
             <option value="$PROJECT_DIR$/Topics/Patterns and Matcher/Theory" />
             <option value="$PROJECT_DIR$/Topics/Patterns and Matcher/Why use Pattern and Matcher" />
+            <option value="$PROJECT_DIR$/Topics/PriorityQueue/Application" />
+            <option value="$PROJECT_DIR$/Topics/PriorityQueue/Comparable objects" />
+            <option value="$PROJECT_DIR$/Topics/PriorityQueue/Comparing by score summary" />
+            <option value="$PROJECT_DIR$/Topics/PriorityQueue/Null values" />
+            <option value="$PROJECT_DIR$/Topics/PriorityQueue/Strings as custom object fields" />
+            <option value="$PROJECT_DIR$/Topics/PriorityQueue/Theory" />
             <option value="$PROJECT_DIR$/Topics/Recursion/Find a substring" />
             <option value="$PROJECT_DIR$/Topics/Recursion/Fix the method to print strings in the reverse order" />
             <option value="$PROJECT_DIR$/Topics/Recursion/K-combination" />
@@ -51,6 +57,10 @@
             <option value="$PROJECT_DIR$/Topics/Regexes in programs/Theory" />
             <option value="$PROJECT_DIR$/Topics/Regexes in programs/Understanding a Regular Expression Pattern" />
             <option value="$PROJECT_DIR$/Topics/Regexes in programs/Vehicle registration number" />
+            <option value="$PROJECT_DIR$/Topics/The utility class Collections/An uncompiled statement" />
+            <option value="$PROJECT_DIR$/Topics/The utility class Collections/Sorting sequences" />
+            <option value="$PROJECT_DIR$/Topics/The utility class Collections/The first index of a sublist" />
+            <option value="$PROJECT_DIR$/Topics/The utility class Collections/Theory" />
             <option value="$PROJECT_DIR$/util" />
           </set>
         </option>

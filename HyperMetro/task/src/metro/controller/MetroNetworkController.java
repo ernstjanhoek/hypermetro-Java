@@ -25,9 +25,7 @@ public class MetroNetworkController implements CommandExecutor {
     }
 
     @Override
-    public void output(String lineName) {
-        MetroLine line = new MetroLine(lineName);
-
+    public void output(MetroLine line) {
         List<Station> stationList = metroNodeMap.getStationsForLine(line);
 
         System.out.println("depot");
@@ -36,22 +34,22 @@ public class MetroNetworkController implements CommandExecutor {
     }
 
     @Override
-    public void append(String lineName, String stationName) {
-        this.metroNodeMap.addAtEnd(stationName, lineName);
+    public void append(MetroLine line, String stationName) {
+        this.metroNodeMap.addAtEnd(stationName, line);
     }
 
     @Override
-    public void remove(String lineName, String stationName) {
-        this.metroNodeMap.remove(stationName, lineName);
+    public void remove(MetroLine line, String stationName) {
+        this.metroNodeMap.remove(stationName, line);
     }
 
     @Override
-    public void addHead(String lineName, String stationName) {
+    public void addHead(MetroLine line, String stationName) {
 
     }
 
     @Override
-    public void connect(String lineName1, String stationName1, String lineName2, String stationName2) {
+    public void connect(MetroLine line1, String stationName1, MetroLine line2, String stationName2) {
 
     }
 }

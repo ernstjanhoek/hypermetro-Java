@@ -7,14 +7,23 @@ import java.util.stream.Collectors;
 
 public class MetroMap {
     Map<MetroNode, Set<MetroEdge>> map;
+    Set<MetroLine> lines;
 
-    public MetroMap(Map<MetroNode, Set<MetroEdge>> map) {
+    public MetroMap(Map<MetroNode, Set<MetroEdge>> map, Set<MetroLine> lines) {
         this.map = map;
+        this.lines = lines;
     }
 
-    public void remove(String stationName, String lineName) {
-        MetroLine line = new MetroLine(lineName);
-        MetroNode node = new MetroNode(stationName);
+    public Optional<MetroLine> mapArgToMetroLine(String arg) {
+       if (lines.contains(new MetroLine(arg))) {
+           return Optional.of(new MetroLine(arg));
+       } else {
+           return Optional.empty();
+       }
+    }
+
+    public void remove(String stationName, MetroLine line) {
+        MetroNode node = new MetroNode(stationName, line);
 
         List<MetroEdge> edges = this.map.get(node).stream()
                 .filter(ed -> ed.getLine().equals(line))
@@ -46,10 +55,9 @@ public class MetroMap {
         boolean removeCB = this.map.get(newEdgeEnd).remove(edgeBC);
     }
 
-    public void addAtEnd(String stationName, String lineName) {
-        MetroLine line = new MetroLine(lineName);
+    public void addAtEnd(String stationName, MetroLine line) {
         MetroNode endNode = getEndNode(line);
-        MetroNode newNode = new MetroNode(stationName);
+        MetroNode newNode = new MetroNode(stationName, line);
 
         MetroEdge edge = new MetroEdge(endNode, newNode, line);
 

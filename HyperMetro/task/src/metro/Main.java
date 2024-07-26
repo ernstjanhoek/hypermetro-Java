@@ -7,11 +7,13 @@ import metro.file.Station;
 import metro.mapper.MetroNetworkMapper;
 import metro.controller.MetroNetworkController;
 import metro.mapper.SubwayNetworkMapper;
+import metro.modelv2.MetroLine;
 import metro.modelv2.MetroMap;
 
 import java.io.*;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 public class Main {
     public static void main(String[] args) throws IOException {
@@ -30,11 +32,29 @@ public class Main {
             Commands command = Commands.fromString(commandArgs.get(0));
             switch (command) {
                 case EXIT -> executor.exit();
-                case OUTPUT -> executor.output(commandArgs.get(1));
-                case APPEND -> executor.append(commandArgs.get(1), commandArgs.get(2));
-                case REMOVE -> executor.remove(commandArgs.get(1), commandArgs.get(2));
-                case ADD_HEAD -> executor.addHead(commandArgs.get(1), commandArgs.get(2));
-                case CONNECT -> executor.connect(commandArgs.get(1), commandArgs.get(2), commandArgs.get(3), commandArgs.get(4));
+                case OUTPUT -> {
+                    Optional<MetroLine> lineOption = metroMap.mapArgToMetroLine(commandArgs.get(1));
+                    lineOption.ifPresent(executor::output);
+                }
+                case APPEND -> {
+                    Optional<MetroLine> lineOption = metroMap.mapArgToMetroLine(commandArgs.get(1));
+                    lineOption.ifPresent(metroLine -> executor.append(metroLine, commandArgs.get(2)));
+                }
+                case REMOVE -> {
+                    Optional<MetroLine> lineOption = metroMap.mapArgToMetroLine(commandArgs.get(1));
+                    lineOption.ifPresent(metroLine -> executor.remove(metroLine, commandArgs.get(2)));
+                }
+                case ADD_HEAD -> {
+                    Optional<MetroLine> lineOption = metroMap.mapArgToMetroLine(commandArgs.get(1));
+                    lineOption.ifPresent(metroLine -> executor.addHead(metroLine, commandArgs.get(2)));
+                }
+                case CONNECT -> {
+                    Optional<MetroLine> lineOption1 = metroMap.mapArgToMetroLine(commandArgs.get(1));
+                    Optional<MetroLine> lineOption2 = metroMap.mapArgToMetroLine(commandArgs.get(3));
+                    if (lineOption1.isPresent() && lineOption2.isPresent()) {
+                        executor.connect(lineOption1.get(), commandArgs.get(2), lineOption2.get(), commandArgs.get(4));
+                    }
+                }
             }
         }
     }

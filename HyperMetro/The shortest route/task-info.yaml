@@ -70,9 +70,11 @@ feedback_link: https://hyperskill.org/learn/step/10344#comment
 status: Failed
 feedback:
   message: |-
-    Wrong answer in test #2
+    Wrong answer in test #3
 
-    Can&#39;t find station &#39;Lausanne—Flon&#39; in the line number 16
+    You output contains wrong number of lines.
+    Expected: 20 lines
+    Your output: 19 lines
 
     Please find below the output of your program during this failed test.
     Note that the &#39;&gt;&#39; character indicates the beginning of the input line.
@@ -81,6 +83,7 @@ feedback:
 
     Arguments: ./test/lausanne.json
 
+    &gt; /append &quot;m1&quot; &quot;Test station 1&quot;
     &gt; /output &quot;m1&quot;
     depot
     Renes—Gare
@@ -97,7 +100,50 @@ feedback:
     Provence
     Montelly
     Vigie
-    Lausanne—Flon - Lausanne—Flon (m2)
+    Lausanne—Flon
+    Test station 1
     depot
-  time: "Tue, 16 Jul 2024 20:19:11 UTC"
+    &gt; /append &quot;m1&quot; &quot;Test station 2&quot;
+    &gt; /output &quot;m1&quot;
+    depot
+    Renes—Gare
+    Epenex
+    Crochy
+    Cerisaie
+    Bassenges
+    EPFL
+    UNL—Sorge
+    Mouline
+    UNL—Chemberonne
+    Bourdonnette
+    Melley
+    Provence
+    Montelly
+    Vigie
+    Lausanne—Flon
+    Test station 1
+    Test station 2
+    depot
+    &gt; /add-head &quot;m1&quot; &quot;Head&quot;
+    &gt; /output &quot;m1&quot;
+    depot
+    Renes—Gare
+    Epenex
+    Crochy
+    Cerisaie
+    Bassenges
+    EPFL
+    UNL—Sorge
+    Mouline
+    UNL—Chemberonne
+    Bourdonnette
+    Melley
+    Provence
+    Montelly
+    Vigie
+    Lausanne—Flon
+    Test station 1
+    Test station 2
+    depot
+  time: "Fri, 26 Jul 2024 05:48:13 UTC"
 record: 4

@@ -1,0 +1,115 @@
+<div class="step-text">
+<p>The <code class="language-java">Queue</code> interface has different implementations with different characteristics. This topic will be dedicated to one of them: the <code class="language-java">PriorityQueue</code> class. You will explore its behavior, understand how it stores elements, and learn how to use it when working with custom classes.</p>
+<h5 id="brief-overview">Brief overview</h5>
+<p>This class doesn't operate on a <strong>FIFO</strong> basis like a regular queue. It is based on a <strong><a class="theory-lookup not-relevant" href="/learn/step/20178" rel="noopener noreferrer nofollow" target="_blank" title="In Java, a priority heap is a data structure that implements thePriorityQueue interface and stores elements based on their priority. | Unlike a regular queue that operates on a first-in-first-out (FIFO) basis, a priority heap orders elements by their priority. By default, it uses the natural ordering of comparable objects, but it can also use custom ordering specified by a Comparator when creating the object. A priority heap is an unbounded queue with an initial capacity of 11 elements, which can grow in size. When adding elements to the queue, they are stored based on their priority, with the highest priority element at the head of the queue. When working with strings, for example, the elements are ordered lexicographically, with the smallest element at the head. It's important to note that a priority heap doesn't accept non-comparable objects. If you try to add a non-comparable object, the application will throw a ClassCastException.">priority heap</a></strong> and is useful when you need to store elements by their priority. By default, it applies <strong><a class="theory-lookup not-relevant" href="/learn/step/20178" rel="noopener noreferrer nofollow" target="_blank" title="In Java, natural ordering is the order defined by the compareTo() method of the Comparable interface. | It is used to sort objects of a class that has a natural or inherent order, such as numbers or dates. When a class has an obvious natural ordering, implementing the Comparable interface is a suitable choice. However, if a class has multiple properties and it's not possible to define a natural order for such objects, or if a class doesn't implement the Comparable interface and cannot be modified, then using other methods for comparison may be necessary.">natural ordering</a> </strong>to comparable objects, or <strong>custom ordering</strong> using a comparator which can be set when creating a <code class="language-java">PriorityQueue</code> object by passing a comparator to its constructor. <br/><code class="language-java">PriorityQueue</code> is an unbounded queue. It has an initial capacity of <strong>11</strong> elements but can grow in size automatically. Besides that, you can set the default capacity manually using the appropriate constructor.</p>
+<h5 id="priorityqueue-with-basic-types">PriorityQueue with basic types</h5>
+<p>In this section, we will explore how <code class="language-java">PriorityQueue</code> operates with basic data types that implement the <code class="language-java">compareTo()</code> method of the <code class="language-java">Comparable</code> interface. </p>
+<pre><code class="language-java">    Queue&lt;Integer&gt; queue = new PriorityQueue();
+    queue.add(5);
+    queue.add(15);
+    queue.add(20);
+    queue.add(10);
+
+    System.out.println(queue.poll()); // 5
+    System.out.println(queue.poll()); // 10</code></pre>
+<p>If we were using a regular queue, the second element would be <code class="language-java">15</code>, and <code class="language-java">10</code> would be added at the tail of the queue. </p>
+<p style="text-align: center;"><picture><img alt="Queue and priority queue diagram" height="188" src="https://ucarecdn.com/61e927b8-5ea0-4dd5-bf14-55e0965abff8/" width="750"/></picture></p>
+<p>Thanks to <code class="language-java">PriorityQueue</code>'s natural ordering behavior, here <code class="language-java">10</code> is stored after <code class="language-java">5</code> in the queue.<br/>In the example above, we saw how <code class="language-java">PriorityQueue</code> orders numeric values. Now let's see how <code class="language-java">PriorityQueue</code> stores strings. Here the head element is <code class="language-java">A</code>: when working with strings, <code class="language-java">PriorityQueue</code> compares elements lexicographically, and <code class="language-java">A</code> is the smallest element. </p>
+<pre><code class="language-java">    Queue&lt;String&gt; queue = new PriorityQueue();
+    queue.add("B");
+    queue.add("C");
+    queue.add("D");
+    queue.add("A");
+
+    System.out.println(queue.poll()); // A
+    System.out.println(queue.poll()); // B</code></pre>
+<p> </p>
+<p></p>
+<div class="alert alert-primary"><p> <code class="language-java">PriorityQueue</code> doesn't accept <code class="language-java">null</code> values. If you add a <code class="language-java">null</code> value the application will throw a <code class="language-java">NullPointerException</code>.</p></div>
+<p> </p>
+<p></p>
+<p> </p>
+<h5 id="priorityqueue-with-custom-classes">PriorityQueue with custom classes</h5>
+<p>Now that we've seen how <code class="language-java">PriorityQueue</code> works with basic types, let's study some examples with custom classes. First, let's create a <code class="language-java">Person</code> class with one field and the <code class="language-java">PersonComparator</code> class implementing the <code class="language-java">Comparator</code> interface to pass its object to the <code class="language-java">PriorityQueue</code> constructor. Without this, the application will throw a <code class="language-java">ClassCastException</code>, since you can't add non-comparable objects to the <code class="language-java">PriorityQueue</code>.</p>
+<pre><code class="language-java">class Person {
+    private int mathScore;
+
+    public Person(int age) {
+        this.mathScore = age;
+    }
+
+    // getter
+
+    @Override
+    public String toString() {
+        return "Person{" +
+                "mathScore=" + mathScore +
+                '}';
+    }
+}
+
+class PersonComparator implements Comparator&lt;Person&gt; {
+    @Override
+    public int compare(Person p1, Person p2) {
+        return Integer.compare(p1.getMathScore(), p2.getMathScore());
+    }
+}</code></pre>
+<p>The <code class="language-java">compare()</code> implementation will store the smallest value in the head. Now let's create a queue passing the comparator to its constructor, and add some elements to it:</p>
+<pre><code class="language-java">    Queue&lt;Person&gt; queue = new PriorityQueue(new PersonComparator());
+    queue.add(new Person(90));
+    queue.add(new Person(80));
+    queue.add(new Person(85));
+
+    System.out.println(queue.poll()); // 80
+    System.out.println(queue.poll()); // 85</code></pre>
+<p>In this example, we have only one field in the class. But what if we had more than one? After updating the code, we will have the <code class="language-java">compare()</code> method based on two field comparisons, where the head will store the element with the biggest value.</p>
+<pre><code class="language-java">class Person {
+    private int mathScore;
+    private int physicsScore;
+
+    public Person(int mathScore, int physicsScore) {
+        this.mathScore = mathScore;
+        this.physicsScore = physicsScore;
+    }
+ 
+    // getters
+
+    @Override
+    public String toString() {
+        return "Person{" +
+                "mathScore=" + mathScore +
+                ", physicsScore=" + physicsScore +
+                '}';
+    }
+}
+
+class PersonComparator implements Comparator&lt;Person&gt; {
+    @Override
+    public int compare(Person p1, Person p2) {
+        // Part 1
+        int result = (p1.getMathScore() &gt; p2.getMathScore()) ? -1 :
+                ((p1.getMathScore() == p2.getMathScore()) ? 0 : 1);
+        if (result != 0) return result;
+
+        // Part 2
+        return (p1.getPhysicsScore() &gt; p2.getPhysicsScore()) ? -1 :
+                ((p1.getPhysicsScore() == p2.getPhysicsScore()) ? 0 : 1);
+    }
+}</code></pre>
+<p>Here, we first compare <code class="language-java">mathScore</code> and if it's equal, we compare <code class="language-java">physicsScore</code>. Let's analyze the <code class="language-java">compare()</code> method code so that you have a better understanding of how it works. This is a slightly modified version of the code that is executed when calling the <code class="language-java">Integer.compare()</code> method. If we used it in our queue without modification, the smallest element would be stored in the head, so we have to change its code to store the biggest element in the head. In the first part, the <a class="theory-lookup not-relevant" href="/learn/step/20178" rel="noopener noreferrer nofollow" target="_blank" title="In Java, a ternary operator is a concise way to express simple conditional statements. | It provides a compact syntax to evaluate a boolean expression and choose one of two expressions to execute based on the boolean expression's outcome. The ternary operator consists of three operands: a boolean expression, and two expressions to be evaluated based on the boolean expression's outcome. It is important to note that the expressions following the boolean expression must be reducible to a common type. The ternary operator can be considered a shorthand for the if-then-else statement, making the code more concise and easier to read. It is often used to assign different values to a variable depending on a certain condition.">ternary operator</a> checks if <code class="language-java">p1.getMathScore()</code> is greater than <code class="language-java">p2.getMathScore()</code>. If it is, it returns <code class="language-java">-1</code>, if not, they are checked for equality. If they are equal, the ternary operator returns <code class="language-java">0</code>, otherwise <code class="language-java">1</code>. After that, the <code class="language-java">if</code> block checks the <code class="language-java">result</code> variable value: if it is not <code class="language-java">0</code>, the values aren't equal, and the method returns the <code class="language-java">result</code> variable value. If the value is <code class="language-java">0</code>, the <a class="theory-lookup not-relevant" href="/learn/step/20178" rel="noopener noreferrer nofollow" target="_blank" title="In Java, a variable is a named storage location that is used to store a value of a specific type. | It is declared with a specific data type, which determines the kind of value that can be stored in it. Every variable has a unique name, also known as an identifier, which is used to access its value. Variables can be declared and initialized in a single statement, and their value can be accessed and modified using the name. It's important to note that variables can be changed, meaning you can assign a new value to a variable without having to declare it again.">variables</a> are equal, so it needs to perform an additional comparison of the <code class="language-java">physicsScore</code> field.<br/>Now let's add elements to the queue and see how this code works:</p>
+<pre><code class="language-java">    Queue&lt;Person&gt; queue = new PriorityQueue(new PersonComparator());
+    queue.add(new Person(90, 95));
+    queue.add(new Person(90, 100));
+    queue.add(new Person(80, 100));
+    queue.add(new Person(80, 95));
+    queue.add(new Person(85, 90));
+
+    System.out.println(queue.poll()); // Person{mathScore=90, physicsScore=100}
+    System.out.println(queue.poll()); // Person{mathScore=90, physicsScore=95}
+    System.out.println(queue.poll()); // Person{mathScore=85, physicsScore=90}
+    System.out.println(queue.poll()); // Person{mathScore=80, physicsScore=100}
+    System.out.println(queue.poll()); // Person{mathScore=80, physicsScore=95}</code></pre>
+<p>This is exactly the behavior we expected. The elements are sorted according to the logic we implemented. The application first sorts the elements based on the <code class="language-java">mathScore</code> value: if these values are equal, it compares the <code class="language-java">physicsScore</code> values.</p>
+<h5 id="conclusion">Conclusion</h5>
+<p>In this topic, we discussed the <code class="language-java">PriorityQueue</code> class and explained how to use it in practice. You learned how <code class="language-java">PriorityQueue</code> operates with both basic types and custom classes. You can write any logic to compare its elements. For this purpose, we have prepared some practical tasks for you. So, study the code examples in the theory section carefully and proceed to practice!</p>
+</div>

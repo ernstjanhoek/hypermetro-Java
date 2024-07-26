@@ -18,8 +18,8 @@ public class MetroNetworkMapper implements Mapper<MetroMap> {
 
             for (int i = 0; i < stationArray.length - 1; i++) {
                 // check if origin and destination nodes are in Map
-                MetroNode origin = new MetroNode(stationArray[i].getName());
-                MetroNode destination = new MetroNode(stationArray[i + 1].getName());
+                MetroNode origin = new MetroNode(stationArray[i].getName(), line);
+                MetroNode destination = new MetroNode(stationArray[i + 1].getName(), line);
                 MetroEdge metroEdge = new MetroEdge(origin, destination, line);
 
                 // add entry for origin
@@ -40,7 +40,7 @@ public class MetroNetworkMapper implements Mapper<MetroMap> {
                 }
             }
         });
-        return new MetroMap(metroMap);
+        return new MetroMap(metroMap, lineStations.keySet());
     }
 
     private static Map<MetroLine, List<Station>> getMetroLineListMap(Map<String, Map<String, Station>> inputMap) {
