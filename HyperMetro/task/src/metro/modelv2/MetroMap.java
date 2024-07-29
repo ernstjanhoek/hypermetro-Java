@@ -1,111 +1,100 @@
 package metro.modelv2;
 
+import metro.base.BaseEdge;
+import metro.base.BaseGraph;
 import metro.file.Station;
 import metro.file.Transfer;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class MetroMap {
-    Map<MetroNode, Set<MetroEdge>> map;
-    Set<MetroLine> lines;
+public class MetroMap extends BaseGraph<MetroNode, MetroEdge> {
+    Set<String> lines;
 
-    public MetroMap(Map<MetroNode, Set<MetroEdge>> map, Set<MetroLine> lines) {
-        this.map = map;
+    public MetroMap(Map<MetroNode, Set<MetroEdge>> map, Set<String> lines) {
+        super(map);
         this.lines = lines;
     }
 
-    public Optional<MetroLine> mapArgToMetroLine(String arg) {
-       if (lines.contains(new MetroLine(arg))) {
-           return Optional.of(new MetroLine(arg));
+    public Optional<String> findMetroLine(String arg) {
+       if (lines.contains(arg)) {
+           return Optional.of(arg);
        } else {
            return Optional.empty();
        }
     }
 
-    public void remove(String stationName, MetroLine line) {
-        MetroNode node = new MetroNode(stationName, line);
+    public void connectNodes(MetroNode firstNode, MetroNode secondNode) {
+        Optional<MetroNode> firstMetroNode = super.getNode(firstNode);
+        Optional<MetroNode> secondMetroNode = super.getNode(secondNode);
+        if (firstMetroNode.isPresent() && secondMetroNode.isPresent()) {
+            firstMetroNode.get().addTransfer(secondMetroNode.get());
+            secondMetroNode.get().addTransfer(firstMetroNode.get());
+        }
+    }
 
-        List<MetroEdge> edges = this.map.get(node).stream()
-                .filter(ed -> ed.getLine().equals(line))
+    public void remove(MetroNode node) {
+        List<MetroEdge> edges = super.getEdgesByNode(node).stream()
+                .filter(ed -> ed.getDestination().getLine().equals(node.getLine()) || ed.getOrigin().getLine().equals(node.getLine()))
                 .filter(ed -> ed.getDestination().equals(node) || ed.getOrigin().equals(node))
                 .toList();
 
-        MetroNode newEdgeStart;
-        MetroNode newEdgeEnd;
+        // optionals for new edge A-C
+        Optional<MetroEdge> newEdgeOrigin;
+        Optional<MetroEdge> newEdgeDestination;
 
         // create edge between A - C / C - A
-        if (edges.get(0).getOrigin().equals(edges.get(1).getDestination())) {
-            newEdgeStart = edges.get(1).getOrigin();
-            newEdgeEnd = edges.get(0).getDestination();
+        if (edges.size() > 1) {
+            MetroNode newEdgeStart;
+            MetroNode newEdgeEnd;
+
+            if (edges.get(0).getOrigin().equals(edges.get(1).getDestination())) {
+                newEdgeStart = edges.get(1).getOrigin();
+                newEdgeEnd = edges.get(0).getDestination();
+            } else {
+                newEdgeStart = edges.get(0).getOrigin();
+                newEdgeEnd = edges.get(1).getDestination();
+            }
+
+            MetroEdge edge = new MetroEdge(newEdgeStart, newEdgeEnd);
+            super.addEdge(newEdgeStart, newEdgeEnd, edge);
+
+            // remove edges between A - B / B - A
+            MetroEdge edgeAB = new MetroEdge(newEdgeStart, node);
+            super.removeEdge(newEdgeStart, node, edgeAB);
+
+            // remove edges B - C / C - B
+            MetroEdge edgeBC = new MetroEdge(node, newEdgeEnd);
+            super.removeEdge(node, newEdgeEnd, edgeBC);
+        } else if (edges.size() == 1) {
+            MetroEdge edge = edges.get(0);
+            MetroNode startNode = edges.get(0).getOrigin();
+            MetroNode endNode = edges.get(0).getDestination();
+            super.removeEdge(startNode, endNode, edge);
         } else {
-            newEdgeStart = edges.get(0).getOrigin();
-            newEdgeEnd = edges.get(1).getDestination();
-        }
-        MetroEdge edge = new MetroEdge(newEdgeStart, newEdgeEnd, line);
-        this.addEdge(edge);
-
-        // remove edges between A - B / B - A
-        MetroEdge edgeAB = new MetroEdge(newEdgeStart, node, line);
-        boolean removeAB = this.map.get(newEdgeStart).remove(edgeAB);
-        boolean removeBA = this.map.get(node).remove(edgeAB);
-
-        // remove edges B - C / C - B
-        MetroEdge edgeBC = new MetroEdge(node, newEdgeEnd, line);
-        boolean removeBC = this.map.get(node).remove(edgeBC);
-        boolean removeCB = this.map.get(newEdgeEnd).remove(edgeBC);
-    }
-
-    public void addAtEnd(String stationName, MetroLine line) {
-        MetroNode endNode = getEndNode(line);
-        MetroNode newNode = new MetroNode(stationName, line);
-
-        MetroEdge edge = new MetroEdge(endNode, newNode, line);
-
-        this.addEdge(edge);
-    }
-
-    public void addEdge(MetroEdge edge) {
-        // add for origin
-        if (!this.map.containsKey(edge.getOrigin())) {
-            Set<MetroEdge> metroEdges = new HashSet<>();
-            metroEdges.add(edge);
-            this.map.put(edge.getDestination(), metroEdges);
-        } else {
-            this.map.get(edge.getOrigin()).add(edge);
-        }
-
-        // add entry for destination
-        if (!this.map.containsKey(edge.getDestination())) {
-            Set<MetroEdge> metroEdges = new HashSet<>();
-            metroEdges.add(edge);
-            this.map.put(edge.getDestination(), metroEdges);
-        } else {
-            this.map.get(edge.getDestination()).add(edge);
+            System.out.println("Node not found!");
         }
     }
 
-    private void removeEdgesBetweenNodes(
-            MetroNode startingNode,
-            MetroNode endingNode) {
+    public void addAtEnd(MetroNode newNode) {
+        Optional<MetroNode> endNode = getEndNode(newNode.getLine());
+        if (endNode.isPresent()) {
+            super.addNode(newNode);
+            MetroEdge edge = new MetroEdge(endNode.get(), newNode);
+            super.addEdge(newNode, endNode.get(), edge);
+        }
     }
 
-    private boolean isEndNode(MetroNode node) {
-       return false;
+    public void addAtTail(MetroNode newNode) {
+        Optional<MetroNode> startNode = getStartNode(newNode.getLine());
+        if (startNode.isPresent()) {
+            super.addNode(newNode);
+
+            MetroEdge edge = new MetroEdge(newNode, startNode.get());
+            super.addEdge(newNode, startNode.get(), edge);
+        }
     }
 
-    private boolean isStartingNode(MetroNode node) {
-       return false;
-    }
-
-    private void removeEdgeFromStartingNode(MetroNode node) {
-
-    }
-
-    private void removeEdgeFromEndingNode(MetroNode node) {
-
-    }
-
-    private MetroNode getEndNode(MetroLine line) {
+    private Optional<MetroNode> getEndNode(String line) {
         Optional<MetroEdge> candidate = getMetroEdgeCandidate(line);
 
         MetroNode startNode = null;
@@ -117,14 +106,18 @@ public class MetroMap {
                 candidate = filterByLine(edges.get(), line);
             }
         }
-        return startNode;
+
+        if (startNode == null) {
+            return Optional.empty();
+        } else {
+            return Optional.of(startNode);
+        }
     }
 
-    private MetroNode getStartNode(MetroLine line) {
+    private Optional<MetroNode> getStartNode(String line) {
         Optional<MetroEdge> candidate = getMetroEdgeCandidate(line);
 
         MetroNode startNode = null;
-
         while (candidate.isPresent()) {
             startNode = candidate.get().getOrigin();
             Optional<Set<MetroEdge>> edges = findPreviousEdges(candidate.get());
@@ -132,63 +125,71 @@ public class MetroMap {
                 candidate = filterByLine(edges.get(), line);
             }
         }
-        return startNode;
-    }
-
-    private Optional<MetroEdge> getMetroEdgeCandidate(MetroLine line) {
-        Optional<MetroEdge> candidate = this.map.values().stream()
-                .flatMap(Set::stream)
-                .filter(edge -> edge.getLine().equals(line))
-                .findFirst();
-        return candidate;
-    }
-
-    public List<Station> getStationsForLine(MetroLine line) {
-
-        Optional<MetroEdge> startEdge = this.map.get(getStartNode(line)).stream().findFirst();
-
-        List<Station> stationList = new ArrayList<>();
-
-        if (startEdge.isPresent()) {
-            stationList.add(mapEdgeOriginToStation(startEdge.get(), line));
-            stationList.add(mapEdgeDestinationToStation(startEdge.get(), line));
+        if (startNode == null) {
+            return Optional.empty();
+        } else {
+            return Optional.of(startNode);
         }
+    }
 
-        while (startEdge.isPresent()) {
-            Optional<Set<MetroEdge>> edges = findNextEdges(startEdge.get());
-            if (edges.isPresent()) {
-                Optional<MetroEdge> edge = filterByLine(edges.get(), line);
-                startEdge = edge;
-                if (edge.isPresent()) {
-                    stationList.add(mapEdgeDestinationToStation(edge.get(), line));
-                } else {
-                    startEdge = Optional.empty();
+    private Optional<MetroEdge> getMetroEdgeCandidate(String line) {
+        return this.getGraph().values().stream()
+                .flatMap(Set::stream)
+                .filter(edge -> edge.getOrigin().getLine().equals(line) || edge.getDestination().getLine().equals(line))
+                .findFirst();
+    }
+
+    public List<Station> getStationsForLine(String line) {
+        Optional<MetroNode> startNode = getStartNode(line);
+
+        if (startNode.isPresent()) {
+            Optional<MetroEdge> startEdge = getGraph().get(startNode.get()).stream().findFirst();
+
+            List<Station> stationList = new ArrayList<>();
+
+            if (startEdge.isPresent()) {
+                stationList.add(mapEdgeOriginToStation(startEdge.get(), line));
+                stationList.add(mapEdgeDestinationToStation(startEdge.get(), line));
+            }
+
+            while (startEdge.isPresent()) {
+                Optional<Set<MetroEdge>> edges = findNextEdges(startEdge.get());
+                if (edges.isPresent()) {
+                    Optional<MetroEdge> edge = filterByLine(edges.get(), line);
+                    startEdge = edge;
+                    if (edge.isPresent()) {
+                        stationList.add(mapEdgeDestinationToStation(edge.get(), line));
+                    } else {
+                        startEdge = Optional.empty();
+                    }
                 }
             }
+            return stationList;
+        } else {
+            return List.of();
         }
-        return stationList;
     }
 
-    private Station mapEdgeOriginToStation(MetroEdge edge, MetroLine line) {
-        String stationNameStart = edge.getOrigin().getName();
-
-        return new Station(stationNameStart, this.map.get(edge.getOrigin()).stream()
-                .filter(ed -> !ed.getLine().equals(line))
-                .map(ed -> ed.getLine().getName())
-                .map(t -> new Transfer(t, stationNameStart)).distinct().toArray(Transfer[]::new));
+    private Station mapEdgeOriginToStation(MetroEdge edge, String line) {
+        MetroNode stationStart = edge.getOrigin();
+        return new Station(stationStart.getName(),
+                stationStart.getTransfers().stream()
+                        .map(e -> new Transfer(e.getLine(), e.getName()))
+                        .toList().toArray(new Transfer[0])
+        );
     }
 
-    private Station mapEdgeDestinationToStation(MetroEdge edge, MetroLine line) {
-        String stationNameEnd = edge.getDestination().getName();
-
-        return new Station(stationNameEnd, this.map.get(edge.getDestination()).stream()
-                .filter(ed -> !ed.getLine().equals(line))
-                .map(ed -> ed.getLine().getName())
-                .map(t -> new Transfer(t, stationNameEnd)).distinct().toArray(Transfer[]::new));
+    private Station mapEdgeDestinationToStation(MetroEdge edge, String line) {
+        MetroNode stationDestination = edge.getDestination();
+        return new Station(stationDestination.getName(),
+                stationDestination.getTransfers().stream()
+                        .map(e -> new Transfer(e.getLine(), e.getName()))
+                        .toList().toArray(new Transfer[0])
+        );
     }
 
-    private Optional<MetroEdge> filterByLine(Set<MetroEdge> edges, MetroLine line) {
-        List<MetroEdge> edgeList = edges.stream().filter(e -> e.getLine().equals(line)).toList();
+    private Optional<MetroEdge> filterByLine(Set<MetroEdge> edges, String line) {
+        List<MetroEdge> edgeList = edges.stream().filter(e -> e.getOrigin().getLine().equals(line)).toList();
         if (edgeList.isEmpty()) {
             return Optional.empty();
         } else {
@@ -197,16 +198,36 @@ public class MetroMap {
     }
 
     private Optional<Set<MetroEdge>> findPreviousEdges(MetroEdge edge) {
-        Set<MetroEdge> result = this.map.get(edge.getOrigin()).stream()
+        Set<MetroEdge> result = getGraph().get(edge.getOrigin()).stream()
                 .filter(e -> e.getDestination().equals(edge.getOrigin()))
                 .collect(Collectors.toSet());
         return Optional.of(result);
     }
 
     private Optional<Set<MetroEdge>> findNextEdges(MetroEdge edge) {
-        Set<MetroEdge> result = this.map.get(edge.getDestination()).stream()
+        Set<MetroEdge> result = getGraph().get(edge.getDestination()).stream()
                 .filter(e -> e.getOrigin().equals(edge.getDestination()))
                 .collect(Collectors.toSet());
         return Optional.of(result);
+    }
+
+    // override getNeighbours (bfs) to find possible transfers for MetroMap
+    @Override
+    public Set<MetroNode> getNeighbours(MetroNode current) {
+
+        Set<MetroNode> transfersFromCurrent = current.getTransfers();
+
+        Set<MetroEdge> edgesFromCurrent = getEdgesByDestination(current);
+        Set<MetroNode> neighboursFromCurrent = edgesFromCurrent.stream()
+                .map(BaseEdge::getOrigin)
+                .collect(Collectors.toSet());
+
+        Set<MetroNode> neighboursToCurrent = getEdgesByOrigin(current).stream()
+                .map(BaseEdge::getDestination)
+                .collect(Collectors.toSet());
+
+        neighboursToCurrent.addAll(neighboursFromCurrent);
+        neighboursToCurrent.addAll(transfersFromCurrent);
+        return neighboursToCurrent;
     }
 }

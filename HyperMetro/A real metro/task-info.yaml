@@ -12,7 +12,7 @@ files:
   - name: test/Tests.java
     visible: false
     learner_created: false
-  - name: src/test_file.txt
+  - name: src/test0.json
     visible: true
     learner_created: true
   - name: src/metro/subway/Station.java

@@ -1,0 +1,90 @@
+{
+  "lineA" : {
+    "8": {
+      "name": "A1" ,
+      "transfer": []
+    } ,
+    "9": {
+      "name": "A2B4" ,
+      "transfer": [
+        {
+          "line": "lineB" ,
+          "station": "A2B4"
+        }
+      ]
+    } ,
+    "10": {
+      "name": "A3C4" ,
+      "transfer": [
+        {
+          "line": "lineC" ,
+          "station": "A3C4"
+        }
+      ]
+    } ,
+    "11": {
+      "name": "A4" ,
+      "transfer": []
+    }
+  },
+  "lineB" : {
+    "9": {
+      "name": "B1" ,
+      "transfer": []
+    } ,
+    "10": {
+      "name": "B2C2" ,
+      "transfer": [
+        {
+          "line": "lineC" ,
+          "station": "B2C2"
+        }
+      ]
+    } ,
+    "11": {
+      "name": "B3" ,
+      "transfer": []
+    } ,
+    "12": {
+      "name": "A2B4",
+      "transfer": [
+        {
+          "line": "lineA",
+          "station": "A2B4"
+        }
+      ]
+    }
+  },
+  "lineC" : {
+    "7": {
+      "name": "C1",
+      "transfer": []
+    },
+    "8": {
+      "name": "B2C2",
+      "transfer": [
+        {
+          "line": "lineB",
+          "station": "B2C2"
+        }
+      ]
+    },
+    "9": {
+      "name": "C3",
+      "transfer": []
+    },
+    "10": {
+      "name": "A3C4",
+      "transfer": [
+        {
+          "line": "lineA",
+          "station": "A3C4"
+        }
+      ]
+    },
+    "11": {
+      "name": "C5",
+      "transfer": []
+    }
+  }
+}

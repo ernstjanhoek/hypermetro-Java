@@ -1,0 +1,64 @@
+{
+  "lineA": {
+    "1": {
+      "name": "stationA1",
+      "transfer": []
+    },
+    "3": {
+      "name": "stationA2B3",
+      "transfer": [{
+        "line": "lineB",
+        "station": "stationA2B3"
+      }]
+    },
+    "2": {
+      "name": "stationA3",
+      "transfer": []
+    }
+  },
+  "lineB": {
+    "2": {
+      "name": "stationB1",
+      "transfer": []
+    },
+    "4": {
+      "name": "stationB2",
+      "transfer": []
+    },
+    "3": {
+      "name": "stationA2B3",
+      "transfer": [{
+        "line": "lineA",
+        "station": "stationA2B3"
+      }]
+    },
+    "1": {
+      "name": "stationB4C2",
+      "transfer": [{
+        "line": "lineC",
+        "station": "stationB4C2"
+      }]
+    }
+  },
+  "lineC": {
+    "1":{
+      "name": "stationC1",
+      "transfer": []
+    },
+    "2":{
+      "name": "stationB4C2",
+      "transfer": [{
+        "line": "lineB",
+        "station": "stationB4C2"
+      }]
+    },
+    "3":{
+      "name": "stationC3",
+      "transfer": []
+    },
+    "4":{
+      "name": "stationC4",
+      "transfer": []
+    }
+  }
+}

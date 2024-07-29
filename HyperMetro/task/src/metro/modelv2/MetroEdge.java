@@ -1,33 +1,18 @@
 package metro.modelv2;
 
+import metro.base.BaseEdge;
 import java.util.Objects;
 
-public class MetroEdge {
-    private final MetroNode origin;
-    private final MetroNode destination;
-    private final MetroLine line;
+public class MetroEdge extends BaseEdge<MetroNode> {
 
-    public MetroEdge(MetroNode origin, MetroNode destination, MetroLine line) {
-        this.origin = origin;
-        this.destination = destination;
-        this.line = line;
+    public MetroEdge(MetroNode origin, MetroNode destination) {
+        super(origin, destination);
     }
 
-    public MetroNode getDestination() {
-        return destination;
-    }
-
-    public MetroNode getOrigin() {
-        return origin;
-    }
-
-    public MetroLine getLine() {
-        return line;
-    }
 
     @Override
     public int hashCode() {
-        return Objects.hash(origin.getName(), destination.getName(), line);
+        return Objects.hash(getOrigin().getName(), getDestination().getName());
     }
 
     @Override
@@ -35,6 +20,7 @@ public class MetroEdge {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         MetroEdge metroEdge = (MetroEdge) o;
-        return Objects.equals(origin, metroEdge.origin) && Objects.equals(destination, metroEdge.destination) && Objects.equals(line, metroEdge.line);
+        return Objects.equals(getOrigin(), metroEdge.getOrigin()) &&
+                Objects.equals(getDestination(), metroEdge.getDestination());
     }
 }

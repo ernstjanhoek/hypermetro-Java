@@ -1,13 +1,12 @@
 package metro.controller;
 
-import metro.modelv2.MetroLine;
-
 public interface CommandExecutor {
     void exit();
-    void output(MetroLine line);
-    void append(MetroLine line, String stationName);
-    void remove(MetroLine line, String stationName);
-    void addHead(MetroLine line, String stationName);
-    void connect(MetroLine line1, String stationName1, MetroLine line2, String stationName2);
+    void output(String line);
+    void append(String line, String stationName);
+    void remove(String line, String stationName);
+    void addHead(String line, String stationName);
+    void connect(String line1, String stationName1, String line2, String stationName2);
+    void route(String line1, String stationName1, String line2, String stationName2);
     boolean isRunning();
 }

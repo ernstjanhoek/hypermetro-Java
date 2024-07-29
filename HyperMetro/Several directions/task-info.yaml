@@ -27,7 +27,7 @@ files:
   - name: src/metro/subway/SubwayLine.java
     visible: true
     learner_created: true
-  - name: src/test_file.txt
+  - name: src/test0.json
     visible: true
     learner_created: true
 feedback_link: https://hyperskill.org/learn/step/10342#comment
