@@ -1,0 +1,28 @@
+{
+  "A" : {
+    "1" : {
+      "name": "A1B2",
+      "transfer": [{
+        "line": "B" ,
+        "station": "A1B2"
+      }]
+    },
+    "2": {
+      "name": "A2" ,
+      "transfer": []
+    }
+  },
+  "B" : {
+    "1" : {
+      "name": "B1",
+      "transfer": []
+    },
+    "2": {
+      "name": "A1B2",
+      "transfer": [{
+        "line": "A",
+        "station": "A1B2"
+      }]
+    }
+  }
+}
