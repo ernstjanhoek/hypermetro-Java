@@ -6,6 +6,7 @@ import metro.modelv2.MetroMap;
 import metro.modelv2.MetroNode;
 import metro.modelv2.MetroEdge;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class MetroNetworkMapper implements Mapper<MetroMap> {
     public MetroMap buildAndConnect(Map<String, Map<String, Station>> inputMap) {
@@ -20,6 +21,16 @@ public class MetroNetworkMapper implements Mapper<MetroMap> {
                 // check if origin and destination nodes are in Map
                 MetroNode origin = new MetroNode(stationArray[i].getName(), line);
                 MetroNode destination = new MetroNode(stationArray[i + 1].getName(), line);
+
+                if (metroMap.containsKey(origin)) {
+                    MetroNode finalOrigin = origin;
+                    origin = metroMap.keySet().stream().filter(n -> n.equals(finalOrigin)).findFirst().get();
+                }
+
+                if (metroMap.containsKey(destination)) {
+                    MetroNode finalDestination = destination;
+                    destination = metroMap.keySet().stream().filter(n -> n.equals(finalDestination)).findFirst().get();
+                }
 
                 MetroEdge metroEdge = new MetroEdge(origin, destination);
 
@@ -49,14 +60,20 @@ public class MetroNetworkMapper implements Mapper<MetroMap> {
             for (Station station : stationArray) {
                 if (station.getTransfer().length > 0) {
                     Set<MetroNode> transfers = new HashSet<>();
+
+                    // connect transfers to node
                     for (Transfer transfer: station.getTransfer()) {
-                        transfers.add(new MetroNode(transfer.getStation(), transfer.getLine()));
+                        MetroNode fakeReference = new MetroNode(station.getName(), transfer.getLine());
+                        Optional<MetroNode> actualReference = metroMap.keySet().stream().filter(e -> e.equals(fakeReference)).findFirst();
+                        actualReference.ifPresent(transfers::add);
                     }
-                    Optional<MetroNode> node = metroMap.keySet().stream()
+
+                    // connect node to transfers.
+                    Set<MetroNode> nodes = metroMap.keySet().stream()
                             .filter(n -> n.getName().equals(station.getName()) &&
                                     n.getLine().equals(line))
-                            .findFirst();
-                    node.ifPresent(metroNode -> transfers.forEach(metroNode::addTransfer));
+                            .collect(Collectors.toSet());
+                    nodes.forEach(metroNode -> transfers.forEach(metroNode::addTransfer));
                 }
             }
         });

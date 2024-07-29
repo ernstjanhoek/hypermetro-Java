@@ -82,22 +82,8 @@ files:
     visible: true
     learner_created: true
 feedback_link: https://hyperskill.org/learn/step/10344#comment
-status: Failed
+status: Solved
 feedback:
-  message: |-
-    Wrong answer in test #8
-
-    Your program printed an incorrect number of stations in the route.
-    Expected: 5 stations and 2 transitions. Output should be 9 lines.
-    Your output: 1 lines
-
-    Please find below the output of your program during this failed test.
-    Note that the &#39;&gt;&#39; character indicates the beginning of the input line.
-
-    ---
-
-    Arguments: ./test/prague.json
-
-    &gt; /route &quot;Linka C&quot; &quot;Vysehrad&quot; &quot;Linka B&quot; &quot;Namesti Republiky&quot;
-  time: "Mon, 29 Jul 2024 14:35:29 UTC"
+  message: Congratulations!
+  time: "Mon, 29 Jul 2024 20:47:32 UTC"
 record: 4

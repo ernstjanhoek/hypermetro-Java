@@ -1,7 +1,6 @@
 package metro.base;
 
 import metro.algorithms.BreadthFirstSearch;
-
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -65,7 +64,6 @@ public class BaseGraph<T extends BaseNode<?>, U extends BaseEdge<T>> implements 
         neighboursToCurrent.addAll(neighboursFromCurrent);
         return neighboursToCurrent;
     }
-
 
     public BaseGraph() {
         this.baseEdgeMap = new HashMap<>();

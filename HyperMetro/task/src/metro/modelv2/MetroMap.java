@@ -214,20 +214,14 @@ public class MetroMap extends BaseGraph<MetroNode, MetroEdge> {
     // override getNeighbours (bfs) to find possible transfers for MetroMap
     @Override
     public Set<MetroNode> getNeighbours(MetroNode current) {
+        Set<MetroNode> neighbours = super.getNeighbours(current);
 
-        Set<MetroNode> transfersFromCurrent = current.getTransfers();
+        Set<MetroNode> transfersCurrent = current.getTransfers();
+        for (MetroNode transfer: transfersCurrent) {
+            Set<MetroNode> transferNeighbours = super.getNeighbours(transfer);
+            neighbours.addAll(transferNeighbours);
+        }
 
-        Set<MetroEdge> edgesFromCurrent = getEdgesByDestination(current);
-        Set<MetroNode> neighboursFromCurrent = edgesFromCurrent.stream()
-                .map(BaseEdge::getOrigin)
-                .collect(Collectors.toSet());
-
-        Set<MetroNode> neighboursToCurrent = getEdgesByOrigin(current).stream()
-                .map(BaseEdge::getDestination)
-                .collect(Collectors.toSet());
-
-        neighboursToCurrent.addAll(neighboursFromCurrent);
-        neighboursToCurrent.addAll(transfersFromCurrent);
-        return neighboursToCurrent;
+        return neighbours;
     }
 }

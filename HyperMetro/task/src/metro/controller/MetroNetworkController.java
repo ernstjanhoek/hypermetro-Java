@@ -69,8 +69,9 @@ public class MetroNetworkController implements CommandExecutor {
         MetroNode[] array = list.toArray(new MetroNode[0]);
         for (int i = 0; i < array.length-1; i++) {
             System.out.println(array[i].getName());
-            if (array[i].getName().equals(array[i+1].getName())) {
-                System.out.println("Transition to line " + array[i].getLine());
+            if (!array[i].getLine().equals(array[i+1].getLine())) {
+                System.out.println("Transition to line " + array[i+1].getLine());
+                System.out.println(array[i].getName());
             }
         }
         System.out.println(array[array.length - 1].getName());
