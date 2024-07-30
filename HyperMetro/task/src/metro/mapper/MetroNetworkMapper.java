@@ -8,7 +8,7 @@ import metro.modelv2.MetroEdge;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class MetroNetworkMapper implements Mapper<MetroMap> {
+public class MetroNetworkMapper implements Mapper<MetroMap, Station> {
     public MetroMap buildAndConnect(Map<String, Map<String, Station>> inputMap) {
         Map<String, List<Station>> lineStations = getMetroLineListMap(inputMap);
 

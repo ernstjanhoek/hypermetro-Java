@@ -4,6 +4,6 @@ import metro.file.Station;
 
 import java.util.Map;
 
-public interface Mapper<T> {
-    T buildAndConnect(Map<String, Map<String, Station>> inputMap);
+public interface Mapper<T, U extends Station> {
+    T buildAndConnect(Map<String, Map<String, U>> inputMap);
 }

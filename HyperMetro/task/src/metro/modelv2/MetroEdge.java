@@ -3,12 +3,11 @@ package metro.modelv2;
 import metro.base.BaseEdge;
 import java.util.Objects;
 
-public class MetroEdge extends BaseEdge<MetroNode> {
+public class MetroEdge<T extends MetroNode> extends BaseEdge<T> {
 
-    public MetroEdge(MetroNode origin, MetroNode destination) {
+    public MetroEdge(T origin, T destination) {
         super(origin, destination);
     }
-
 
     @Override
     public int hashCode() {

@@ -15,6 +15,78 @@ files:
   - name: test/Tests.java
     visible: false
     learner_created: false
+  - name: src/prague.json
+    visible: true
+    learner_created: true
+  - name: src/metro/file/InputReader.java
+    visible: true
+    learner_created: true
+  - name: src/metro/controller/MetroNetworkController.java
+    visible: true
+    learner_created: true
+  - name: src/metro/algorithms/BreadthFirstSearch.java
+    visible: true
+    learner_created: true
+  - name: src/metro/file/Station.java
+    visible: true
+    learner_created: true
+  - name: src/metro/modelv2/MetroNode.java
+    visible: true
+    learner_created: true
+  - name: src/test0.json
+    visible: true
+    learner_created: true
+  - name: src/isolated_prague.json
+    visible: true
+    learner_created: true
+  - name: src/test.json
+    visible: true
+    learner_created: true
+  - name: src/metro/modelv2/MetroEdge.java
+    visible: true
+    learner_created: true
+  - name: src/metro/controller/CommandExecutor.java
+    visible: true
+    learner_created: true
+  - name: src/metro/modelv2/MetroMap.java
+    visible: true
+    learner_created: true
+  - name: src/simple_test.json
+    visible: true
+    learner_created: true
+  - name: src/metro/mapper/MetroNetworkMapper.java
+    visible: true
+    learner_created: true
+  - name: src/metro/base/BaseEdge.java
+    visible: true
+    learner_created: true
+  - name: src/metro/file/Transfer.java
+    visible: true
+    learner_created: true
+  - name: src/metro/mapper/Mapper.java
+    visible: true
+    learner_created: true
+  - name: src/metro/base/BaseGraph.java
+    visible: true
+    learner_created: true
+  - name: src/metro/base/BaseNode.java
+    visible: true
+    learner_created: true
+  - name: src/metro/modelv3/WeightedMetroNode.java
+    visible: true
+    learner_created: true
+  - name: src/metro/modelv3/WeightedMetroMap.java
+    visible: true
+    learner_created: true
+  - name: src/prague_w_time.json
+    visible: true
+    learner_created: true
+  - name: src/metro/file/WeightedStation.java
+    visible: true
+    learner_created: true
+  - name: src/metro/mapper/WeightedMetroMapper.java
+    visible: true
+    learner_created: true
 feedback_link: https://hyperskill.org/learn/step/10345#comment
-status: Unchecked
+status: Failed
 record: -1

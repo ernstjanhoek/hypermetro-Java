@@ -26,8 +26,14 @@ public class InputReader {
         Type type = new TypeToken<Map<String, Map<String, Station>>>() {}.getType();
 
         // Deserialize the JSON into the SubwaySystem class
-        Map<String, Map<String, Station>> subwaySystem = gson.fromJson(reader, type);
-        return subwaySystem;
+        return gson.fromJson(reader, type);
+    }
+
+    public static Map<String, Map<String, WeightedStation>> readWeightedFromFile(String path) throws IOException {
+        Gson gson = new Gson();
+        Reader reader = Files.newBufferedReader(Paths.get(path));
+        Type type = new TypeToken<Map<String, Map<String, WeightedStation>>>() {}.getType();
+        return gson.fromJson(reader, type);
     }
 
     public static List<String> readCommand() {
