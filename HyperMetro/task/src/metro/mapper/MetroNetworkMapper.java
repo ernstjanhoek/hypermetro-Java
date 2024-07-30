@@ -8,11 +8,11 @@ import metro.modelv2.MetroEdge;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class MetroNetworkMapper implements Mapper<MetroMap, Station> {
-    public MetroMap buildAndConnect(Map<String, Map<String, Station>> inputMap) {
+public class MetroNetworkMapper implements Mapper<MetroMap<MetroNode>, Station> {
+    public MetroMap<MetroNode> buildAndConnect(Map<String, Map<String, Station>> inputMap) {
         Map<String, List<Station>> lineStations = getMetroLineListMap(inputMap);
 
-        Map<MetroNode, Set<MetroEdge>> metroMap = new HashMap<>();
+        Map<MetroNode, Set<MetroEdge<MetroNode>>> metroMap = new HashMap<>();
 
         lineStations.forEach((line, stationList) -> {
             Station[] stationArray = stationList.toArray(new Station[0]);
@@ -32,11 +32,11 @@ public class MetroNetworkMapper implements Mapper<MetroMap, Station> {
                     destination = metroMap.keySet().stream().filter(n -> n.equals(finalDestination)).findFirst().get();
                 }
 
-                MetroEdge metroEdge = new MetroEdge(origin, destination);
+                MetroEdge<MetroNode> metroEdge = new MetroEdge<>(origin, destination);
 
                 // add entry for origin
                 if (!metroMap.containsKey(origin)) {
-                    HashSet<MetroEdge> metroEdges = new HashSet<>();
+                    HashSet<MetroEdge<MetroNode>> metroEdges = new HashSet<>();
                     metroEdges.add(metroEdge);
                     metroMap.put(origin, metroEdges);
                 } else {
@@ -44,7 +44,7 @@ public class MetroNetworkMapper implements Mapper<MetroMap, Station> {
                 }
                 // add entry for destination
                 if (!metroMap.containsKey(destination)) {
-                    HashSet<MetroEdge> metroEdges = new HashSet<>();
+                    HashSet<MetroEdge<MetroNode>> metroEdges = new HashSet<>();
                     metroEdges.add(metroEdge);
                     metroMap.put(destination, metroEdges);
                 } else {
@@ -78,7 +78,7 @@ public class MetroNetworkMapper implements Mapper<MetroMap, Station> {
             }
         });
 
-        return new MetroMap(metroMap, lineStations.keySet());
+        return new MetroMap<>(metroMap, lineStations.keySet());
     }
 
     private static Map<String, List<Station>> getMetroLineListMap(Map<String, Map<String, Station>> inputMap) {

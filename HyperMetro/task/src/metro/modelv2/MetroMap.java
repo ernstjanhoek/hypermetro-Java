@@ -143,8 +143,8 @@ public class MetroMap<T extends MetroNode> extends BaseGraph<T, MetroEdge<T>> {
             List<Station> stationList = new ArrayList<>();
 
             if (startEdge.isPresent()) {
-                stationList.add(mapEdgeOriginToStation(startEdge.get(), line));
-                stationList.add(mapEdgeDestinationToStation(startEdge.get(), line));
+                stationList.add(mapEdgeOriginToStation(startEdge.get()));
+                stationList.add(mapEdgeDestinationToStation(startEdge.get()));
             }
 
             while (startEdge.isPresent()) {
@@ -153,7 +153,7 @@ public class MetroMap<T extends MetroNode> extends BaseGraph<T, MetroEdge<T>> {
                     Optional<MetroEdge<T>> edge = filterByLine(edges.get(), line);
                     startEdge = edge;
                     if (edge.isPresent()) {
-                        stationList.add(mapEdgeDestinationToStation(edge.get(), line));
+                        stationList.add(mapEdgeDestinationToStation(edge.get()));
                     } else {
                         startEdge = Optional.empty();
                     }
@@ -165,7 +165,7 @@ public class MetroMap<T extends MetroNode> extends BaseGraph<T, MetroEdge<T>> {
         }
     }
 
-    private Station mapEdgeOriginToStation(MetroEdge<T> edge, String line) {
+    private Station mapEdgeOriginToStation(MetroEdge<T> edge) {
         MetroNode stationStart = edge.getOrigin();
         return new Station(stationStart.getName(),
                 stationStart.getTransfers().stream()
@@ -174,7 +174,7 @@ public class MetroMap<T extends MetroNode> extends BaseGraph<T, MetroEdge<T>> {
         );
     }
 
-    private Station mapEdgeDestinationToStation(MetroEdge<T> edge, String line) {
+    private Station mapEdgeDestinationToStation(MetroEdge<T> edge) {
         MetroNode stationDestination = edge.getDestination();
         return new Station(stationDestination.getName(),
                 stationDestination.getTransfers().stream()

@@ -31,4 +31,9 @@ public class BaseEdge<T extends BaseNode<?>> {
     public int hashCode() {
         return Objects.hash(origin, destination);
     }
+
+    @Override
+    public String toString() {
+        return origin.toString() + " -- " + destination.toString();
+    }
 }

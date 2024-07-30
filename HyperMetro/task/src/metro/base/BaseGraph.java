@@ -51,7 +51,6 @@ public class BaseGraph<T extends BaseNode<?>, U extends BaseEdge<T>> implements 
         return path;
     }
 
-    @Override
     public Set<T> getNeighbours(T current) {
         Set<T> neighboursFromCurrent = getEdgesByDestination(current).stream()
                 .map(BaseEdge::getOrigin)
@@ -117,5 +116,13 @@ public class BaseGraph<T extends BaseNode<?>, U extends BaseEdge<T>> implements 
 
     public Set<U> getEdgesByDestination(T target) {
         return baseEdgeMap.get(target).stream().filter(e -> e.getDestination().equals(target)).collect(Collectors.toSet());
+    }
+
+    @Override
+    public String toString() {
+        Set<BaseEdge<T>> edges = baseEdgeMap.values().stream().flatMap(Collection::stream).collect(Collectors.toSet());
+        String string = edges.stream().map(e -> "\"" + e.getOrigin() + "\" -- \"" + e.getDestination() + "\""
+        ).collect(Collectors.joining("\n"));
+        return "graph {\n" + string + "\n}";
     }
 }

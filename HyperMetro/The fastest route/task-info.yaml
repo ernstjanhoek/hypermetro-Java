@@ -87,6 +87,87 @@ files:
   - name: src/metro/mapper/WeightedMetroMapper.java
     visible: true
     learner_created: true
+  - name: src/metro/controller/WeightedMetroNetworkController.java
+    visible: true
+    learner_created: true
+  - name: src/metro/algorithms/DijkstraAlgorithm.java
+    visible: true
+    learner_created: true
 feedback_link: https://hyperskill.org/learn/step/10345#comment
 status: Failed
+feedback:
+  message: |-
+    Wrong answer in test #8
+
+    Your program printed an incorrect number of stations in the route. Expected 10 stations and the total time!
+
+    Please find below the output of your program during this failed test.
+    Note that the &#39;&gt;&#39; character indicates the beginning of the input line.
+
+    ---
+
+    Arguments: ./test/prague_w_time.json
+
+    graph {
+    &quot;Opatov&quot; -- &quot;Haje&quot;
+    &quot;Staromestska&quot; -- &quot;Mustek&quot;
+    &quot;Ladvi&quot; -- &quot;Kobylisy&quot;
+    &quot;Malostranska&quot; -- &quot;Staromestska&quot;
+    &quot;Dejvicka&quot; -- &quot;Hradcanska&quot;
+    &quot;Letnany&quot; -- &quot;Prosek&quot;
+    &quot;Chodov&quot; -- &quot;Opatov&quot;
+    &quot;Kacerov&quot; -- &quot;Roztyly&quot;
+    &quot;Muzeum&quot; -- &quot;Namesti Miru&quot;
+    &quot;Mustek&quot; -- &quot;Narodni trida&quot;
+    &quot;Roztyly&quot; -- &quot;Chodov&quot;
+    &quot;Vysehrad&quot; -- &quot;Prazskeho povstani&quot;
+    &quot;Jiriho z Podebrad&quot; -- &quot;Flora&quot;
+    &quot;Flora&quot; -- &quot;Zelivskeho&quot;
+    &quot;Hradcanska&quot; -- &quot;Malostranska&quot;
+    &quot;Strasnicka&quot; -- &quot;Skalka&quot;
+    &quot;Andel&quot; -- &quot;Smichovske nadrazi&quot;
+    &quot;Nove Butovice&quot; -- &quot;Hurka&quot;
+    &quot;Nadrazi Veleslavin&quot; -- &quot;Borislavka&quot;
+    &quot;Nadrazi Holesovice&quot; -- &quot;Vltavska&quot;
+    &quot;Petriny&quot; -- &quot;Nadrazi Veleslavin&quot;
+    &quot;Kolbenova&quot; -- &quot;Vysocanska&quot;
+    &quot;Nemocnice Motol&quot; -- &quot;Petriny&quot;
+    &quot;Narodni trida&quot; -- &quot;Karlovo namesti&quot;
+    &quot;Ceskomoravska&quot; -- &quot;Palmovka&quot;
+    &quot;Smichovske nadrazi&quot; -- &quot;Radlicka&quot;
+    &quot;Radlicka&quot; -- &quot;Jinonice&quot;
+    &quot;Rajska zahrada&quot; -- &quot;Hloubetin&quot;
+    &quot;Invalidovna&quot; -- &quot;Krizikova&quot;
+    &quot;Florenc&quot; -- &quot;Namesti Republiky&quot;
+    &quot;Florenc&quot; -- &quot;Hlavni nadrazi&quot;
+    &quot;Pankrac&quot; -- &quot;Budejovicka&quot;
+    &quot;Namesti Republiky&quot; -- &quot;Mustek&quot;
+    &quot;Vysocanska&quot; -- &quot;Ceskomoravska&quot;
+    &quot;Vltavska&quot; -- &quot;Florenc&quot;
+    &quot;Palmovka&quot; -- &quot;Invalidovna&quot;
+    &quot;Zelivskeho&quot; -- &quot;Strasnicka&quot;
+    &quot;Prosek&quot; -- &quot;Strizkov&quot;
+    &quot;Namesti Miru&quot; -- &quot;Jiriho z Podebrad&quot;
+    &quot;Kobylisy&quot; -- &quot;Nadrazi Holesovice&quot;
+    &quot;Hurka&quot; -- &quot;Luziny&quot;
+    &quot;Krizikova&quot; -- &quot;Florenc&quot;
+    &quot;Budejovicka&quot; -- &quot;Kacerov&quot;
+    &quot;Skalka&quot; -- &quot;Depo Hostivar&quot;
+    &quot;Prazskeho povstani&quot; -- &quot;Pankrac&quot;
+    &quot;Hloubetin&quot; -- &quot;Kolbenova&quot;
+    &quot;Jinonice&quot; -- &quot;Nove Butovice&quot;
+    &quot;Stodulky&quot; -- &quot;Zlicin&quot;
+    &quot;Mustek&quot; -- &quot;Muzeum&quot;
+    &quot;Karlovo namesti&quot; -- &quot;Andel&quot;
+    &quot;Luka&quot; -- &quot;Stodulky&quot;
+    &quot;Strizkov&quot; -- &quot;Ladvi&quot;
+    &quot;I.P.Pavlova&quot; -- &quot;Vysehrad&quot;
+    &quot;Hlavni nadrazi&quot; -- &quot;Muzeum&quot;
+    &quot;Cerny Most&quot; -- &quot;Rajska zahrada&quot;
+    &quot;Luziny&quot; -- &quot;Luka&quot;
+    &quot;Borislavka&quot; -- &quot;Dejvicka&quot;
+    &quot;Muzeum&quot; -- &quot;I.P.Pavlova&quot;
+    }
+    &gt; /fastest-route &quot;Linka A&quot; &quot;Borislavka&quot; &quot;Linka A&quot; &quot;Flora&quot;
+  time: "Tue, 30 Jul 2024 21:44:08 UTC"
 record: -1

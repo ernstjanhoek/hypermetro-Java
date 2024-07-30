@@ -1,14 +1,15 @@
 package metro;
 
 import metro.controller.CommandExecutor;
+import metro.controller.WeightedMetroNetworkController;
 import metro.file.InputReader;
 import metro.file.Station;
 import metro.file.WeightedStation;
-import metro.mapper.Mapper;
 import metro.mapper.MetroNetworkMapper;
 import metro.controller.MetroNetworkController;
 import metro.mapper.WeightedMetroMapper;
 import metro.modelv2.MetroMap;
+import metro.modelv2.MetroNode;
 import metro.modelv3.WeightedMetroMap;
 
 import java.util.List;
@@ -26,11 +27,13 @@ public class Main {
             WeightedMetroMap weightedMetroMap = weightedMetroMapper.buildAndConnect(inputMap2);
 
             MetroNetworkMapper metroNetworkMapper = new MetroNetworkMapper();
-            MetroMap metroMap = metroNetworkMapper.buildAndConnect(inputMap);
+            MetroMap<MetroNode> metroMap = metroNetworkMapper.buildAndConnect(inputMap);
 
             System.out.println(metroMap);
 
-            CommandExecutor executor = new MetroNetworkController(metroMap);
+            // CommandExecutor executor = new MetroNetworkController(metroMap);
+
+            WeightedMetroNetworkController executor = new WeightedMetroNetworkController(weightedMetroMap);
 
             while (executor.isRunning()) {
                 try {
@@ -75,7 +78,11 @@ public class Main {
                         }
 
                         case FASTEST_ROUTE -> {
-
+                            Optional<String> lineOption1 = metroMap.findMetroLine(commandArgs.get(1));
+                            Optional<String> lineOption2 = metroMap.findMetroLine(commandArgs.get(3));
+                            if (lineOption1.isPresent() && lineOption2.isPresent()) {
+                                executor.fastRoute(lineOption1.get(), commandArgs.get(2), lineOption2.get(), commandArgs.get(4));
+                            }
                         }
                     }
                 } catch (Exception e) {

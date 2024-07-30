@@ -7,10 +7,9 @@ import java.util.*;
 
 public class MetroNetworkController implements CommandExecutor {
     boolean isRunning = true;
-    private final MetroMap metroNodeMap;
+    private final MetroMap<MetroNode> metroNodeMap;
 
-    public MetroNetworkController(MetroMap metroNodeMap) {
-        super();
+    public MetroNetworkController(MetroMap<MetroNode> metroNodeMap) {
         this.metroNodeMap = metroNodeMap;
     }
 

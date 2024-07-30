@@ -18,7 +18,7 @@ public class MetroEdge<T extends MetroNode> extends BaseEdge<T> {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        MetroEdge metroEdge = (MetroEdge) o;
+        MetroEdge<T> metroEdge = (MetroEdge<T>) o;
         return Objects.equals(getOrigin(), metroEdge.getOrigin()) &&
                 Objects.equals(getDestination(), metroEdge.getDestination());
     }
