@@ -36,6 +36,13 @@ public class InputReader {
         return gson.fromJson(reader, type);
     }
 
+    public static Map<String, List<ConnectedStation>> readConnectedStationsFromFile(String path) throws IOException {
+        Gson gson = new Gson();
+        Reader reader = Files.newBufferedReader(Paths.get(path));
+        Type type = new TypeToken<Map<String, List<ConnectedStation>>>() {}.getType();
+        return gson.fromJson(reader, type);
+    }
+
     public static List<String> readCommand() {
         Scanner scanner = new Scanner(System.in);
         List<String> arguments = new ArrayList<>();

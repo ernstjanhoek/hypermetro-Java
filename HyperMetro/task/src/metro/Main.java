@@ -2,6 +2,7 @@ package metro;
 
 import metro.controller.CommandExecutor;
 import metro.controller.WeightedMetroNetworkController;
+import metro.file.ConnectedStation;
 import metro.file.InputReader;
 import metro.file.Station;
 import metro.file.WeightedStation;
@@ -19,21 +20,13 @@ import java.util.Optional;
 public class Main {
     public static void main(String[] args) {
         try {
-            Map<String, Map<String, Station>> inputMap = InputReader.readFromFile(args[0]);
+            Map<String, List<ConnectedStation>> inputMap = InputReader.readConnectedStationsFromFile(args[0]);
 
-            Map<String, Map<String, WeightedStation>> inputMap2 = InputReader.readWeightedFromFile(args[0]);
+            MetroMap<MetroNode> metroMap = null;
 
-            WeightedMetroMapper weightedMetroMapper = new WeightedMetroMapper();
-            WeightedMetroMap weightedMetroMap = weightedMetroMapper.buildAndConnect(inputMap2);
+            System.exit(0);
+            WeightedMetroNetworkController executor = new WeightedMetroNetworkController(null);
 
-            MetroNetworkMapper metroNetworkMapper = new MetroNetworkMapper();
-            MetroMap<MetroNode> metroMap = metroNetworkMapper.buildAndConnect(inputMap);
-
-            System.out.println(metroMap);
-
-            // CommandExecutor executor = new MetroNetworkController(metroMap);
-
-            WeightedMetroNetworkController executor = new WeightedMetroNetworkController(weightedMetroMap);
 
             while (executor.isRunning()) {
                 try {
@@ -81,7 +74,7 @@ public class Main {
                             Optional<String> lineOption1 = metroMap.findMetroLine(commandArgs.get(1));
                             Optional<String> lineOption2 = metroMap.findMetroLine(commandArgs.get(3));
                             if (lineOption1.isPresent() && lineOption2.isPresent()) {
-                                executor.fastRoute(lineOption1.get(), commandArgs.get(2), lineOption2.get(), commandArgs.get(4));
+                                executor.fastestRoute(lineOption1.get(), commandArgs.get(2), lineOption2.get(), commandArgs.get(4));
                             }
                         }
                     }
@@ -90,7 +83,7 @@ public class Main {
                 }
             }
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            e.printStackTrace();
         }
     }
 

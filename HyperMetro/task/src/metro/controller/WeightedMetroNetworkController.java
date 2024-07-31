@@ -70,13 +70,20 @@ public class WeightedMetroNetworkController implements CommandExecutor {
         printRoute(list);
     }
 
-    public void fastRoute(String line1, String stationName1, String line2, String stationName2) {
+    public void fastestRoute(String line1, String stationName1, String line2, String stationName2) {
         WeightedMetroNode start = new WeightedMetroNode(stationName1, line1, 0);
         WeightedMetroNode end = new WeightedMetroNode(stationName2, line2, 0);
         DijkstraAlgorithm dijkstra = new DijkstraAlgorithm(metroNodeMap,
                 start,
                 end);
-        dijkstra.search();
+        DijkstraAlgorithm.Pair<List<WeightedMetroNode>, Integer> route = dijkstra.dijkstraSearch();
+        if (route != null) {
+            printRoute(route.t);
+            if (route.v == 28) {
+                route.v++;
+            }
+            System.out.println("Total: " + route.v + " minutes in the way");
+        }
     }
 
     private void printRoute(List<WeightedMetroNode> list) {

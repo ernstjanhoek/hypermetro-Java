@@ -62,6 +62,7 @@ public class WeightedMetroMapper implements Mapper<WeightedMetroMap, WeightedSta
             });
         });
 
-        return new WeightedMetroMap(metroMap, lines);
+        return null;
+        // return new WeightedMetroMap(metroMap, lines);
     }
 }
