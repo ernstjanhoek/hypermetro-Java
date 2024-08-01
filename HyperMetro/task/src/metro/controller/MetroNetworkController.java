@@ -1,5 +1,7 @@
 package metro.controller;
 
+import metro.algorithms.BFS;
+import metro.base.BaseEdge;
 import metro.file.Station;
 import metro.modelv2.MetroMap;
 import metro.modelv2.MetroNode;
@@ -7,9 +9,9 @@ import java.util.*;
 
 public class MetroNetworkController implements CommandExecutor {
     boolean isRunning = true;
-    private final MetroMap<MetroNode> metroNodeMap;
+    private final MetroMap<MetroNode, BaseEdge<MetroNode>> metroNodeMap;
 
-    public MetroNetworkController(MetroMap<MetroNode> metroNodeMap) {
+    public MetroNetworkController(MetroMap<MetroNode, BaseEdge<MetroNode>> metroNodeMap) {
         this.metroNodeMap = metroNodeMap;
     }
 
@@ -26,7 +28,6 @@ public class MetroNetworkController implements CommandExecutor {
     @Override
     public void output(String line) {
         List<Station> stationList = metroNodeMap.getStationsForLine(line);
-
         System.out.println("depot");
         stationList.forEach(System.out::println);
         System.out.println("depot");
@@ -34,7 +35,9 @@ public class MetroNetworkController implements CommandExecutor {
 
     @Override
     public void append(String line, String stationName) {
-        this.metroNodeMap.addAtEnd(new MetroNode(stationName, line));
+        MetroNode node = new MetroNode(stationName, line);
+        BaseEdge<MetroNode> edge = new BaseEdge<>(metroNodeMap.getEndNode(line).get(), node);
+        this.metroNodeMap.addAtEnd(node, edge);
     }
 
     @Override
@@ -44,7 +47,9 @@ public class MetroNetworkController implements CommandExecutor {
 
     @Override
     public void addHead(String line, String stationName) {
-        this.metroNodeMap.addAtTail(new MetroNode(stationName, line));
+        MetroNode node = new MetroNode(stationName, line);
+        BaseEdge<MetroNode> edge = new BaseEdge<>(node, metroNodeMap.getStartNode(line).get());
+        this.metroNodeMap.addAtTail(new MetroNode(stationName, line), edge);
     }
 
     @Override
@@ -57,7 +62,10 @@ public class MetroNetworkController implements CommandExecutor {
 
     @Override
     public void route(String line1, String stationName1, String line2, String stationName2) {
-        List<MetroNode> list = this.metroNodeMap.bfs(new MetroNode(stationName1, line1), new MetroNode(stationName2, line2));
+        MetroNode startNode = new MetroNode(stationName1, line1);
+        MetroNode endNode = new MetroNode(stationName2, line2);
+        BFS<MetroNode, MetroMap<MetroNode, BaseEdge<MetroNode>>, BaseEdge<MetroNode>> bfs = new BFS<>(metroNodeMap, startNode, endNode);
+        List<MetroNode> list = bfs.search();
         printRoute(list);
     }
 

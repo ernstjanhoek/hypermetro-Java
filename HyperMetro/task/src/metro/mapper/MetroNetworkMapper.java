@@ -1,18 +1,18 @@
 package metro.mapper;
 
+import metro.base.BaseEdge;
 import metro.file.Station;
 import metro.file.Transfer;
 import metro.modelv2.MetroMap;
 import metro.modelv2.MetroNode;
-import metro.modelv2.MetroEdge;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class MetroNetworkMapper implements Mapper<MetroMap<MetroNode>, Station> {
-    public MetroMap<MetroNode> buildAndConnect(Map<String, Map<String, Station>> inputMap) {
+public class MetroNetworkMapper implements Mapper<MetroNode, BaseEdge<MetroNode>, MetroMap<MetroNode, BaseEdge<MetroNode>>, Station> {
+    public MetroMap<MetroNode, BaseEdge<MetroNode>> buildAndConnect(Map<String, Map<String, Station>> inputMap) {
         Map<String, List<Station>> lineStations = getMetroLineListMap(inputMap);
 
-        Map<MetroNode, Set<MetroEdge<MetroNode>>> metroMap = new HashMap<>();
+        Map<MetroNode, Set<BaseEdge<MetroNode>>> metroMap = new HashMap<>();
 
         lineStations.forEach((line, stationList) -> {
             Station[] stationArray = stationList.toArray(new Station[0]);
@@ -32,11 +32,11 @@ public class MetroNetworkMapper implements Mapper<MetroMap<MetroNode>, Station> 
                     destination = metroMap.keySet().stream().filter(n -> n.equals(finalDestination)).findFirst().get();
                 }
 
-                MetroEdge<MetroNode> metroEdge = new MetroEdge<>(origin, destination);
+                BaseEdge<MetroNode> metroEdge = new BaseEdge<>(origin, destination);
 
                 // add entry for origin
                 if (!metroMap.containsKey(origin)) {
-                    HashSet<MetroEdge<MetroNode>> metroEdges = new HashSet<>();
+                    HashSet<BaseEdge<MetroNode>> metroEdges = new HashSet<>();
                     metroEdges.add(metroEdge);
                     metroMap.put(origin, metroEdges);
                 } else {
@@ -44,7 +44,7 @@ public class MetroNetworkMapper implements Mapper<MetroMap<MetroNode>, Station> 
                 }
                 // add entry for destination
                 if (!metroMap.containsKey(destination)) {
-                    HashSet<MetroEdge<MetroNode>> metroEdges = new HashSet<>();
+                    HashSet<BaseEdge<MetroNode>> metroEdges = new HashSet<>();
                     metroEdges.add(metroEdge);
                     metroMap.put(destination, metroEdges);
                 } else {

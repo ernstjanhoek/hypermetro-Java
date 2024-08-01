@@ -19,6 +19,20 @@ public class BaseEdge<T extends BaseNode<?>> {
         return destination;
     }
 
+    /**
+     * Checks for equal nodes in this edge and other edges (parameter value)
+     * If there are matching nodes in the edges. Method returns an optional new edge of the outer non equal nodes.
+     */
+    public BaseEdge<T> splice(BaseEdge<T> otherEdge) {
+        if (this.getDestination().equals(otherEdge.getOrigin())) {
+            return new BaseEdge<>(this.origin, otherEdge.getDestination());
+        } else if (this.getOrigin().equals(otherEdge.getDestination())) {
+            return new BaseEdge<>(this.destination, otherEdge.getOrigin());
+        } else {
+            return null;
+        }
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

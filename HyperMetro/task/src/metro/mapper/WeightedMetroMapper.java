@@ -1,19 +1,18 @@
 package metro.mapper;
 
+import metro.base.BaseEdge;
 import metro.file.Transfer;
 import metro.file.WeightedStation;
-import metro.modelv2.MetroEdge;
 import metro.modelv3.WeightedMetroMap;
 import metro.modelv3.WeightedMetroNode;
 
 import java.util.*;
-
-public class WeightedMetroMapper implements Mapper<WeightedMetroMap, WeightedStation> {
+public class WeightedMetroMapper implements Mapper<WeightedMetroNode, BaseEdge<WeightedMetroNode>, WeightedMetroMap<WeightedMetroNode>, WeightedStation> {
     @Override
-    public WeightedMetroMap buildAndConnect(Map<String, Map<String, WeightedStation>> inputMap) {
+    public WeightedMetroMap<WeightedMetroNode> buildAndConnect(Map<String, Map<String, WeightedStation>> inputMap) {
 
         Set<String> lines = inputMap.keySet();
-        Map<WeightedMetroNode, Set<MetroEdge<WeightedMetroNode>>> metroMap = new HashMap<>();
+        Map<WeightedMetroNode, Set<BaseEdge<WeightedMetroNode>>> metroMap = new HashMap<>();
         Map<String, List<WeightedMetroNode>> mapWithNodes = new HashMap<>();
         Map<String, Set<WeightedStation>> stationsWithTransfers = new HashMap<>();
 
@@ -33,7 +32,7 @@ public class WeightedMetroMapper implements Mapper<WeightedMetroMap, WeightedSta
         // connect nodes with edges
         mapWithNodes.forEach((line, nodeMap) -> {
             for (int i = 1; i < nodeMap.size(); i++) {
-                MetroEdge<WeightedMetroNode> edge = new MetroEdge<>(nodeMap.get(i - 1), nodeMap.get(i));
+                BaseEdge<WeightedMetroNode> edge = new BaseEdge<>(nodeMap.get(i - 1), nodeMap.get(i));
                 metroMap.get(nodeMap.get(i - 1)).add(edge);
                 metroMap.get(nodeMap.get(i)).add(edge);
             }
@@ -62,7 +61,6 @@ public class WeightedMetroMapper implements Mapper<WeightedMetroMap, WeightedSta
             });
         });
 
-        return null;
-        // return new WeightedMetroMap(metroMap, lines);
+        return new WeightedMetroMap<>(metroMap, lines);
     }
 }

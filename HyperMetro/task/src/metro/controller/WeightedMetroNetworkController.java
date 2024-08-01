@@ -1,6 +1,8 @@
 package metro.controller;
 
+import metro.algorithms.BFS;
 import metro.algorithms.DijkstraAlgorithm;
+import metro.base.BaseEdge;
 import metro.file.Station;
 import metro.modelv2.MetroNode;
 import metro.modelv3.WeightedMetroMap;
@@ -10,9 +12,9 @@ import java.util.List;
 
 public class WeightedMetroNetworkController implements CommandExecutor {
     boolean isRunning = true;
-    private final WeightedMetroMap metroNodeMap;
+    private final WeightedMetroMap<WeightedMetroNode> metroNodeMap;
 
-    public WeightedMetroNetworkController(WeightedMetroMap metroNodeMap) {
+    public WeightedMetroNetworkController(WeightedMetroMap<WeightedMetroNode> metroNodeMap) {
         this.metroNodeMap = metroNodeMap;
     }
 
@@ -36,12 +38,15 @@ public class WeightedMetroNetworkController implements CommandExecutor {
 
     @Override
     public void append(String line, String stationName) {
-        this.metroNodeMap.addAtEnd(new WeightedMetroNode(stationName, line, 0));
-
+        WeightedMetroNode node = new WeightedMetroNode(stationName, line, 0);
+        BaseEdge<WeightedMetroNode> edge = new BaseEdge<>(metroNodeMap.getEndNode(line).get(), node);
+        this.metroNodeMap.addAtEnd(node, edge);
     }
 
     public void add(String line, String stationName, int time) {
-        this.metroNodeMap.addAtEnd(new WeightedMetroNode(stationName, line, time));
+        WeightedMetroNode node = new WeightedMetroNode(stationName, line, time);
+        BaseEdge<WeightedMetroNode> edge = new BaseEdge<>(metroNodeMap.getEndNode(line).get(), node);
+        this.metroNodeMap.addAtEnd(node, edge);
     }
 
     @Override
@@ -51,8 +56,9 @@ public class WeightedMetroNetworkController implements CommandExecutor {
 
     @Override
     public void addHead(String line, String stationName) {
-        this.metroNodeMap.addAtTail(new WeightedMetroNode(stationName, line, 0));
-
+        WeightedMetroNode node = new WeightedMetroNode(stationName, line, 0);
+        BaseEdge<WeightedMetroNode> edge = new BaseEdge<>(node, metroNodeMap.getStartNode(line).get());
+        this.metroNodeMap.addAtTail(node, edge);
     }
 
     @Override
@@ -66,7 +72,10 @@ public class WeightedMetroNetworkController implements CommandExecutor {
 
     @Override
     public void route(String line1, String stationName1, String line2, String stationName2) {
-        List<WeightedMetroNode> list = this.metroNodeMap.bfs(new WeightedMetroNode(stationName1, line1, 0), new WeightedMetroNode(stationName2, line2, 0));
+        WeightedMetroNode startNode = new WeightedMetroNode(stationName1, line1, 0);
+        WeightedMetroNode endNode = new WeightedMetroNode(stationName2, line2, 0);
+        BFS<WeightedMetroNode, WeightedMetroMap<WeightedMetroNode>, BaseEdge<WeightedMetroNode>> bfs = new BFS<>(metroNodeMap, startNode, endNode);
+        List<WeightedMetroNode> list = bfs.search();
         printRoute(list);
     }
 

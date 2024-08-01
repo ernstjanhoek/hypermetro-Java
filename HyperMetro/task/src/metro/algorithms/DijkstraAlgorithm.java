@@ -6,12 +6,12 @@ import metro.modelv3.WeightedMetroNode;
 import java.util.*;
 
 public class DijkstraAlgorithm {
-    WeightedMetroMap map;
+    WeightedMetroMap<WeightedMetroNode> map;
     WeightedMetroNode startNode;
     WeightedMetroNode endNode;
     static final Integer TRANSFER_TIME = 5;
 
-    public DijkstraAlgorithm(WeightedMetroMap map, WeightedMetroNode start, WeightedMetroNode end) {
+    public DijkstraAlgorithm(WeightedMetroMap<WeightedMetroNode> map, WeightedMetroNode start, WeightedMetroNode end) {
         this.map = map;
         Optional<WeightedMetroNode> optionalStart = map.getNode(start);
         Optional<WeightedMetroNode> optionalEnd = map.getNode(end);
@@ -49,13 +49,12 @@ public class DijkstraAlgorithm {
             }
         }
         if (routeMap.containsKey(endNode) && routeMap.containsKey(startNode)) {
-            List<WeightedMetroNode> route = map.reconstructPath(routeMap, endNode);
+            List<WeightedMetroNode> route = Utils.reconstructPath(routeMap, endNode);
             return new Pair<>(route, distances.get(endNode));
         } else {
             return null;
         }
     }
-
 
     private List<Pair<WeightedMetroNode, Integer>> getNeighbours(WeightedMetroNode currentNode) {
         Set<WeightedMetroNode> neighbours = map.getNeighbours(currentNode);
