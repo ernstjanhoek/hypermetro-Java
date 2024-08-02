@@ -3,7 +3,7 @@ package metro.mapper;
 import metro.file.ConnectedStation;
 import metro.file.WeightedStation;
 import metro.modelv2.MetroNode;
-import metro.modelv3.WeightedMetroEdge;
+import metro.modelv4.WeightedMetroEdge;
 import metro.modelv4.WeightedEdgesMetroMap;
 
 import java.util.*;
@@ -14,26 +14,31 @@ public class WeightedEdgesMapper {
         Set<String> lines = inputMap.keySet();
         // map for output
         Map<MetroNode, Set<WeightedMetroEdge<MetroNode>>> metroMap = new HashMap<>();
+        WeightedEdgesMetroMap<MetroNode> map = new WeightedEdgesMetroMap<>(metroMap, lines);
 
-        // map of <line, list<n>> to keep track of nodes in correct order
-        Map<String, List<MetroNode>> mapWithNodes = new HashMap<>();
-
-        // map of <line, set<station> to keep of stations/node with transfers
         Map<String, Set<WeightedStation>> stationsWithTransfers = new HashMap<>();
+
         inputMap.forEach((line, stations) -> {
             stations.forEach(station -> {
                 MetroNode node = new MetroNode(station.getName(), line);
+
+                // is het nodig om previous ook te mappen? Zo ja, misschien Map maken van WeightedStations om time cost makkelijker te vinden.
                 Set<MetroNode> previous = mapConnectedStations(station.getPrev(), line);
                 Set<MetroNode> next = mapConnectedStations(station.getNext(), line);
                 Set<MetroNode> transfers = mapTransfers(station);
 
+                map.addNode(node);
+                next.forEach(n -> {
+                    map.addNode(n);
+                    map.addEdge(node, n, new WeightedMetroEdge<>(node, n, station.getTime()));
+                });
+                transfers.forEach(n -> {
+                    map.addNode(n);
+                    map.connectNodes(node, n);
+                });
             });
         });
-        return null;
-    }
-
-    private WeightedMetroEdge<MetroNode> buildEdge(MetroNode origin, MetroNode destination, int time) {
-        return new WeightedMetroEdge<>(origin, destination, time);
+        return map;
     }
 
     private Set<MetroNode> mapConnectedStations(String[] stations, String line) {

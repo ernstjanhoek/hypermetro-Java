@@ -36,7 +36,7 @@ public class BFS<T extends BaseNode<?>, U extends BaseGraph<T, S>, S extends Bas
         while (!queue.isEmpty()) {
             T current = queue.poll();
             if (current.equals(target)) {
-                return Utils.reconstructPath(parentMap, target);
+                return AlgoUtils.reconstructPath(parentMap, target);
             }
             Set<T> neighbours = map.getNeighbours(current);
             for (T u : neighbours) {

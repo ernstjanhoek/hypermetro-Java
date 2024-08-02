@@ -1,11 +1,12 @@
 package metro;
 
-import metro.controller.WeightedMetroNetworkController;
+import metro.controller.CommandExecutor;
+import metro.controller.WeightedEdgesController;
+import metro.file.ConnectedStation;
 import metro.file.InputReader;
-import metro.file.WeightedStation;
-import metro.mapper.WeightedMetroMapper;
-import metro.modelv3.WeightedMetroMap;
-import metro.modelv3.WeightedMetroNode;
+import metro.mapper.WeightedEdgesMapper;
+import metro.modelv2.MetroNode;
+import metro.modelv4.WeightedEdgesMetroMap;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -13,12 +14,13 @@ import java.util.Optional;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        Map<String, Map<String, WeightedStation>> inputMap = InputReader.readWeightedFromFile(args[0]);
+        Map<String, List<ConnectedStation>> inputMap0 = InputReader.readConnectedStationsFromFile(args[0]);
 
-        WeightedMetroMapper mapper = new WeightedMetroMapper();
-        WeightedMetroMap<WeightedMetroNode> metroMap = mapper.buildAndConnect(inputMap);
+        WeightedEdgesMapper weightedEdgesMapper = new WeightedEdgesMapper();
+        WeightedEdgesMetroMap<MetroNode> metroMap = weightedEdgesMapper.buildAndConnect(inputMap0);
 
-        WeightedMetroNetworkController executor = new WeightedMetroNetworkController(metroMap);
+
+        CommandExecutor executor = new WeightedEdgesController(metroMap);
         while (executor.isRunning()) {
             try {
                 List<String> commandArgs = InputReader.readCommand();

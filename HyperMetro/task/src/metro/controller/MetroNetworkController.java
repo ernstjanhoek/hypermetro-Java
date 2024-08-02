@@ -7,6 +7,9 @@ import metro.modelv2.MetroMap;
 import metro.modelv2.MetroNode;
 import java.util.*;
 
+import static metro.controller.ControllerUtils.printLine;
+import static metro.controller.ControllerUtils.printRoute;
+
 public class MetroNetworkController implements CommandExecutor {
     boolean isRunning = true;
     private final MetroMap<MetroNode, BaseEdge<MetroNode>> metroNodeMap;
@@ -28,9 +31,7 @@ public class MetroNetworkController implements CommandExecutor {
     @Override
     public void output(String line) {
         List<Station> stationList = metroNodeMap.getStationsForLine(line);
-        System.out.println("depot");
-        stationList.forEach(System.out::println);
-        System.out.println("depot");
+        printLine(stationList);
     }
 
     @Override
@@ -61,6 +62,11 @@ public class MetroNetworkController implements CommandExecutor {
     }
 
     @Override
+    public void add(String line, String stationName, int time) {
+        addHead(line, stationName);
+    }
+
+    @Override
     public void route(String line1, String stationName1, String line2, String stationName2) {
         MetroNode startNode = new MetroNode(stationName1, line1);
         MetroNode endNode = new MetroNode(stationName2, line2);
@@ -69,18 +75,9 @@ public class MetroNetworkController implements CommandExecutor {
         printRoute(list);
     }
 
-    private void printRoute(List<MetroNode> list) {
-        if (list.isEmpty()) {
-            return;
-        }
-        MetroNode[] array = list.toArray(new MetroNode[0]);
-        for (int i = 0; i < array.length-1; i++) {
-            System.out.println(array[i].getName());
-            if (!array[i].getLine().equals(array[i+1].getLine())) {
-                System.out.println("Transition to line " + array[i+1].getLine());
-                System.out.println(array[i].getName());
-            }
-        }
-        System.out.println(array[array.length - 1].getName());
+    @Override
+    public void fastestRoute(String line1, String stationName1, String line2, String stationName2) {
+        route(line1, stationName1, line2, stationName2);
     }
+
 }

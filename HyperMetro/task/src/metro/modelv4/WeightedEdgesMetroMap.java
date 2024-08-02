@@ -2,7 +2,7 @@ package metro.modelv4;
 
 import metro.modelv2.MetroMap;
 import metro.modelv2.MetroNode;
-import metro.modelv3.WeightedMetroEdge;
+
 import java.util.Map;
 import java.util.Set;
 
