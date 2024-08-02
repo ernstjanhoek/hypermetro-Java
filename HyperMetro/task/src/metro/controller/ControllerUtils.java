@@ -15,6 +15,7 @@ public class ControllerUtils {
             System.out.println(array[i].getName());
             if (!array[i].getLine().equals(array[i+1].getLine())) {
                 System.out.println("Transition to line " + array[i+1].getLine());
+                System.out.println(array[i].getName());
             }
         }
         System.out.println(array[array.length - 1].getName());
@@ -25,5 +26,4 @@ public class ControllerUtils {
         stationList.forEach(System.out::println);
         System.out.println("depot");
     }
-
 }

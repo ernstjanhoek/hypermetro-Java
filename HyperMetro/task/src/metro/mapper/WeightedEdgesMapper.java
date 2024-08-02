@@ -4,17 +4,17 @@ import metro.file.ConnectedStation;
 import metro.file.WeightedStation;
 import metro.modelv2.MetroNode;
 import metro.modelv4.WeightedMetroEdge;
-import metro.modelv4.WeightedEdgesMetroMap;
+import metro.modelv4.WeightedEdgesMap;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class WeightedEdgesMapper {
-    public WeightedEdgesMetroMap<MetroNode> buildAndConnect(Map<String, List<ConnectedStation>> inputMap) {
+    public WeightedEdgesMap<MetroNode> buildAndConnect(Map<String, List<ConnectedStation>> inputMap) {
         Set<String> lines = inputMap.keySet();
         // map for output
         Map<MetroNode, Set<WeightedMetroEdge<MetroNode>>> metroMap = new HashMap<>();
-        WeightedEdgesMetroMap<MetroNode> map = new WeightedEdgesMetroMap<>(metroMap, lines);
+        WeightedEdgesMap<MetroNode> map = new WeightedEdgesMap<>(metroMap, lines);
 
         Map<String, Set<WeightedStation>> stationsWithTransfers = new HashMap<>();
 
@@ -28,13 +28,16 @@ public class WeightedEdgesMapper {
                 Set<MetroNode> transfers = mapTransfers(station);
 
                 map.addNode(node);
+                MetroNode originNode = map.getNode(node).get();
                 next.forEach(n -> {
                     map.addNode(n);
-                    map.addEdge(node, n, new WeightedMetroEdge<>(node, n, station.getTime()));
+                    MetroNode destinationNode = map.getNode(n).get();
+                    map.addEdge(originNode, n, new WeightedMetroEdge<>(originNode, destinationNode, station.getTime()));
                 });
                 transfers.forEach(n -> {
                     map.addNode(n);
-                    map.connectNodes(node, n);
+                    MetroNode destinationNode = map.getNode(n).get();
+                    map.connectNodes(originNode, destinationNode);
                 });
             });
         });

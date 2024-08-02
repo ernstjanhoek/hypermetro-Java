@@ -1,17 +1,17 @@
 package metro.algorithms;
 
-import metro.modelv3.WeightedMetroMap;
+import metro.modelv3.WeightedNodeMap;
 import metro.modelv3.WeightedMetroNode;
 
 import java.util.*;
 
 public class WeightedNodeDijkstra {
-    WeightedMetroMap<WeightedMetroNode> map;
+    WeightedNodeMap<WeightedMetroNode> map;
     WeightedMetroNode startNode;
     WeightedMetroNode endNode;
     static final Integer TRANSFER_TIME = 5;
 
-    public WeightedNodeDijkstra(WeightedMetroMap<WeightedMetroNode> map, WeightedMetroNode start, WeightedMetroNode end) {
+    public WeightedNodeDijkstra(WeightedNodeMap<WeightedMetroNode> map, WeightedMetroNode start, WeightedMetroNode end) {
         this.map = map;
         Optional<WeightedMetroNode> optionalStart = map.getNode(start);
         Optional<WeightedMetroNode> optionalEnd = map.getNode(end);
@@ -23,7 +23,6 @@ public class WeightedNodeDijkstra {
         }
     }
 
-    // returns a pair of list and cost from startNode to endNode
     public Pair<List<WeightedMetroNode>, Integer> dijkstraSearch() {
         Map<WeightedMetroNode, Integer> distances = new HashMap<>();
         Map<WeightedMetroNode, WeightedMetroNode> routeMap = new HashMap<>();

@@ -3,13 +3,13 @@ package metro.mapper;
 import metro.base.BaseEdge;
 import metro.file.Transfer;
 import metro.file.WeightedStation;
-import metro.modelv3.WeightedMetroMap;
+import metro.modelv3.WeightedNodeMap;
 import metro.modelv3.WeightedMetroNode;
 
 import java.util.*;
-public class WeightedMetroMapper implements Mapper<WeightedMetroNode, BaseEdge<WeightedMetroNode>, WeightedMetroMap<WeightedMetroNode>, WeightedStation> {
+public class WeightedMetroMapper implements Mapper<WeightedMetroNode, BaseEdge<WeightedMetroNode>, WeightedNodeMap<WeightedMetroNode>, WeightedStation> {
     @Override
-    public WeightedMetroMap<WeightedMetroNode> buildAndConnect(Map<String, Map<String, WeightedStation>> inputMap) {
+    public WeightedNodeMap<WeightedMetroNode> buildAndConnect(Map<String, Map<String, WeightedStation>> inputMap) {
 
         Set<String> lines = inputMap.keySet();
         Map<WeightedMetroNode, Set<BaseEdge<WeightedMetroNode>>> metroMap = new HashMap<>();
@@ -61,6 +61,6 @@ public class WeightedMetroMapper implements Mapper<WeightedMetroNode, BaseEdge<W
             });
         });
 
-        return new WeightedMetroMap<>(metroMap, lines);
+        return new WeightedNodeMap<>(metroMap, lines);
     }
 }

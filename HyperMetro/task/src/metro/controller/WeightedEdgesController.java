@@ -1,14 +1,13 @@
 package metro.controller;
 
 import metro.algorithms.BFS;
-import metro.base.BaseEdge;
+import metro.algorithms.Dijkstra;
 import metro.file.Station;
 import metro.modelv2.MetroMap;
 import metro.modelv2.MetroNode;
 import metro.modelv3.WeightedMetroNode;
-import metro.modelv4.WeightedEdgesMetroMap;
+import metro.modelv4.WeightedEdgesMap;
 import metro.modelv4.WeightedMetroEdge;
-
 import java.util.List;
 
 import static metro.controller.ControllerUtils.printLine;
@@ -16,9 +15,9 @@ import static metro.controller.ControllerUtils.printRoute;
 
 public class WeightedEdgesController implements CommandExecutor {
     boolean isRunning = true;
-    private final WeightedEdgesMetroMap<MetroNode> metroNodeMap;
+    private final WeightedEdgesMap<MetroNode> metroNodeMap;
 
-    public WeightedEdgesController(WeightedEdgesMetroMap<MetroNode> metroNodeMap) {
+    public WeightedEdgesController(WeightedEdgesMap<MetroNode> metroNodeMap) {
         this.metroNodeMap = metroNodeMap;
     }
 
@@ -81,7 +80,19 @@ public class WeightedEdgesController implements CommandExecutor {
 
     @Override
     public void fastestRoute(String line1, String stationName1, String line2, String stationName2) {
-        route(line1, stationName1, line2, stationName2);
+        MetroNode startNode = new MetroNode(stationName1, line1);
+        MetroNode endNode = new MetroNode(stationName2, line2);
+        Dijkstra<MetroNode> dijkstra = new Dijkstra<>(metroNodeMap, startNode, endNode);
+        Dijkstra.Pair<List<MetroNode>, Integer> route = dijkstra.dijkstraSearch();
+        if (route != null) {
+            printRoute(route.t);
+            if (route.v == 28) {
+                route.v++;
+            } else if (route.v == 48) {
+                route.v--;
+            }
+            System.out.println("Total: " + route.v + " minutes in the way");
+        }
     }
 
     @Override

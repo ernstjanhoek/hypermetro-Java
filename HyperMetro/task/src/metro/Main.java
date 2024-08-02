@@ -6,7 +6,7 @@ import metro.file.ConnectedStation;
 import metro.file.InputReader;
 import metro.mapper.WeightedEdgesMapper;
 import metro.modelv2.MetroNode;
-import metro.modelv4.WeightedEdgesMetroMap;
+import metro.modelv4.WeightedEdgesMap;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -17,7 +17,7 @@ public class Main {
         Map<String, List<ConnectedStation>> inputMap0 = InputReader.readConnectedStationsFromFile(args[0]);
 
         WeightedEdgesMapper weightedEdgesMapper = new WeightedEdgesMapper();
-        WeightedEdgesMetroMap<MetroNode> metroMap = weightedEdgesMapper.buildAndConnect(inputMap0);
+        WeightedEdgesMap<MetroNode> metroMap = weightedEdgesMapper.buildAndConnect(inputMap0);
 
 
         CommandExecutor executor = new WeightedEdgesController(metroMap);

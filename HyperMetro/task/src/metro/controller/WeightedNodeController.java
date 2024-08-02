@@ -4,8 +4,7 @@ import metro.algorithms.BFS;
 import metro.algorithms.WeightedNodeDijkstra;
 import metro.base.BaseEdge;
 import metro.file.Station;
-import metro.modelv2.MetroNode;
-import metro.modelv3.WeightedMetroMap;
+import metro.modelv3.WeightedNodeMap;
 import metro.modelv3.WeightedMetroNode;
 
 import java.util.List;
@@ -15,9 +14,9 @@ import static metro.controller.ControllerUtils.printRoute;
 
 public class WeightedNodeController implements CommandExecutor {
     boolean isRunning = true;
-    private final WeightedMetroMap<WeightedMetroNode> metroNodeMap;
+    private final WeightedNodeMap<WeightedMetroNode> metroNodeMap;
 
-    public WeightedNodeController(WeightedMetroMap<WeightedMetroNode> metroNodeMap) {
+    public WeightedNodeController(WeightedNodeMap<WeightedMetroNode> metroNodeMap) {
         this.metroNodeMap = metroNodeMap;
     }
 
@@ -75,7 +74,7 @@ public class WeightedNodeController implements CommandExecutor {
     public void route(String line1, String stationName1, String line2, String stationName2) {
         WeightedMetroNode startNode = new WeightedMetroNode(stationName1, line1, 0);
         WeightedMetroNode endNode = new WeightedMetroNode(stationName2, line2, 0);
-        BFS<WeightedMetroNode, WeightedMetroMap<WeightedMetroNode>, BaseEdge<WeightedMetroNode>> bfs = new BFS<>(metroNodeMap, startNode, endNode);
+        BFS<WeightedMetroNode, WeightedNodeMap<WeightedMetroNode>, BaseEdge<WeightedMetroNode>> bfs = new BFS<>(metroNodeMap, startNode, endNode);
         List<WeightedMetroNode> list = bfs.search();
         printRoute(list);
     }
@@ -95,5 +94,4 @@ public class WeightedNodeController implements CommandExecutor {
             System.out.println("Total: " + route.v + " minutes in the way");
         }
     }
-
 }
