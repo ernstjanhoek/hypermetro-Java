@@ -9,7 +9,7 @@ public class Dijkstra<T extends MetroNode> {
     WeightedEdgesMap<T> map;
     T startNode;
     T endNode;
-    static final Integer TRANSFER_TIME = 5;
+    static final Integer TRANSFER_TIME = 7;
 
     public Dijkstra(WeightedEdgesMap<T> map, T start, T end) {
         this.map = map;
@@ -64,12 +64,18 @@ public class Dijkstra<T extends MetroNode> {
         Optional<WeightedMetroEdge<T>> edge = map.getEdgesByNode(currentNode).stream().filter(e -> (e.getDestination().equals(currentNode) && e.getOrigin().equals(neighbourNode)) ||
                 (e.getDestination().equals(neighbourNode) && e.getOrigin().equals(currentNode)))
                 .findFirst();
-        int distance = edge.map(WeightedMetroEdge::getTime).orElse(10);
+        int distance = edge.map(WeightedMetroEdge::getTime).orElse(getCostForNeighbourPlusTransfer(currentNode));
         return new Dijkstra.Pair<>(neighbourNode, distance);
     }
 
     private int getCostForNeighbourPlusTransfer(T currentNode) {
-        return map.getEdgesByOrigin(currentNode).stream().findFirst().get().getTime() + TRANSFER_TIME;
+        Optional<WeightedMetroEdge<T>> optionalEdge = map.getEdgesByOrigin(currentNode).stream().findFirst();
+        if (optionalEdge.isPresent()) {
+            return optionalEdge.get().getTime() + TRANSFER_TIME;
+        } else {
+            Optional<WeightedMetroEdge<T>> optionalEdge2 = map.getEdgesByDestination(currentNode).stream().findFirst();
+            return optionalEdge2.map(tWeightedMetroEdge -> tWeightedMetroEdge.getTime() + TRANSFER_TIME).orElse(TRANSFER_TIME);
+        }
     }
 
     public static class Pair<T, V> {
