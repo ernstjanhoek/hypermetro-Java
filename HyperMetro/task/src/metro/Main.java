@@ -19,6 +19,7 @@ public class Main {
         WeightedEdgesMapper weightedEdgesMapper = new WeightedEdgesMapper();
         WeightedEdgesMap<MetroNode> metroMap = weightedEdgesMapper.buildAndConnect(inputMap0);
 
+        System.out.println(metroMap);
 
         CommandExecutor executor = new WeightedEdgesController(metroMap);
         while (executor.isRunning()) {

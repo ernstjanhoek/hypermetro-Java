@@ -86,11 +86,6 @@ public class WeightedEdgesController implements CommandExecutor {
         Dijkstra.Pair<List<MetroNode>, Integer> route = dijkstra.dijkstraSearch();
         if (route != null) {
             printRoute(route.t);
-            if (route.v == 28) {
-                route.v++;
-            } else if (route.v == 48) {
-                route.v--;
-            }
             System.out.println("Total: " + route.v + " minutes in the way");
         }
     }
