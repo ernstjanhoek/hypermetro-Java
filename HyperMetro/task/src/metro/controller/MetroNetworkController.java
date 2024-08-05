@@ -80,4 +80,10 @@ public class MetroNetworkController implements CommandExecutor {
         route(line1, stationName1, line2, stationName2);
     }
 
+    @Override
+    public void lines() {
+
+
+    }
+
 }

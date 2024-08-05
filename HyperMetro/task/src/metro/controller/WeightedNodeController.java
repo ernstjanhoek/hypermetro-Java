@@ -94,4 +94,9 @@ public class WeightedNodeController implements CommandExecutor {
             System.out.println("Total: " + route.v + " minutes in the way");
         }
     }
+
+    @Override
+    public void lines() {
+
+    }
 }

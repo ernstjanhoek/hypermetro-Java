@@ -96,6 +96,11 @@ public class WeightedEdgesController implements CommandExecutor {
     }
 
     @Override
+    public void lines() {
+        metroNodeMap.getLines().forEach(System.out::println);
+    }
+
+    @Override
     public boolean isRunning() {
         return isRunning;
     }

@@ -10,5 +10,6 @@ public interface CommandExecutor {
     void add(String line, String stationName, int time);
     void route(String line1, String stationName1, String line2, String stationName2);
     void fastestRoute(String line1, String stationName1, String line2, String stationName2);
+    void lines();
     boolean isRunning();
 }

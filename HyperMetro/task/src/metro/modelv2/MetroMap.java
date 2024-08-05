@@ -15,6 +15,10 @@ public class MetroMap<T extends MetroNode, U extends BaseEdge<T>> extends BaseGr
         this.lines = lines;
     }
 
+    public Set<String> getLines() {
+        return this.lines;
+    }
+
     public Optional<String> findMetroLine(String arg) {
        if (lines.contains(arg)) {
            return Optional.of(arg);

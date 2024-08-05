@@ -27,6 +27,7 @@ public class Main {
                 Commands command = Commands.fromString(commandArgs.get(0));
                 switch (command) {
                     case EXIT -> executor.exit();
+
                     case OUTPUT -> {
                         Optional<String> lineOption = metroMap.findMetroLine(commandArgs.get(1));
                         lineOption.ifPresent(executor::output);
@@ -70,6 +71,8 @@ public class Main {
                             executor.fastestRoute(lineOption1.get(), commandArgs.get(2), lineOption2.get(), commandArgs.get(4));
                         }
                     }
+
+                    case LINES -> executor.lines();
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -79,10 +82,11 @@ public class Main {
 
 
     public enum Commands {
-        APPEND, ADD_HEAD, REMOVE, OUTPUT, EXIT, CONNECT, ROUTE, FASTEST_ROUTE;
+        APPEND, ADD_HEAD, REMOVE, OUTPUT, EXIT, CONNECT, ROUTE, FASTEST_ROUTE, LINES;
 
         public static Commands fromString(String command) throws IllegalStateException {
             return switch (command) {
+                case "/lines" -> LINES;
                 case "/output" -> OUTPUT;
                 case "/exit" -> EXIT;
                 case "/add-head" -> ADD_HEAD;
